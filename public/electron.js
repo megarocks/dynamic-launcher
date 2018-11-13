@@ -4,6 +4,10 @@ const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
 
+let os = require("os")
+
+console.log(os.userInfo().username)
+
 let mainWindow;
 
 function createWindow() {
