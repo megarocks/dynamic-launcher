@@ -2,10 +2,18 @@ import React, {Component} from 'react';
 import styled from 'styled-components'
 
 import {version} from '../package.json';
-import logoTesla from './logo/logo-tesla.png'
+
+const {remote} = window.require("electron")
+console.log(remote.app.getAppPath())
+
+const fs = window.require('fs')
+const path = window.require('path')
+
+const defaultLaunchItems = JSON.parse(fs.readFileSync( path.join('.', 'public', 'default-launch-items.json'), 'utf8'))
 
 const username = window.require('username');
-const child_process = window.require("child_process")
+const opn = window.require("opn")
+
 
 const StyledApp = styled.div`
   margin: 1em;
@@ -58,122 +66,17 @@ const StyledLaunchItem = styled.button`
 
 class App extends Component {
 
-  onLaunchItemClick = (launchItem) => () => {
-    child_process.exec(launchItem.command, (err, stdout, stderr) => {
-      if (err) {
-        console.error(err);
-        alert(err.message)
-        return;
-      }
-      console.log(stdout);
-    });
+  onLaunchItemClick = (launchItem) => async () => {
+    try {
+      const openResult =  await opn(launchItem.command)
+      console.log(openResult)
+    } catch (e) {
+      console.error(e.message)
+      alert(e.message)
+    }
   }
 
   render() {
-
-    const buttons = [
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на маке",
-        command: "/Applications/Calculator.app/Contents/MacOS/Calculator",
-        enabled: true
-      },
-      {
-        label: "Запустить калькулятор на винде",
-        command: "calc.exe",
-        enabled: true
-      },
-    ]
-
     return (
       <StyledApp>
         <header>
@@ -181,9 +84,9 @@ class App extends Component {
         </header>
         <main>
           {
-            buttons.map((button, idx) => (
+            defaultLaunchItems.map((button, idx) => (
               <StyledLaunchItem key={idx} onClick={this.onLaunchItemClick(button)}>
-                <img src={logoTesla} alt=""/>
+                <img src={process.env.PUBLIC_URL + '/assets/logo-tesla.png'} alt=""/>
                 {button.label}
               </StyledLaunchItem>)
             )

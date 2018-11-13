@@ -1,10 +1,13 @@
 {
   "name": "dynamic-launcher",
+  "description": "dynamic-launcher",
   "version": "0.2.0",
   "private": true,
   "author": "vitaly.kiktiov@gmail.com",
   "dependencies": {
     "electron-is-dev": "^1.0.1",
+    "electron-store": "^2.0.0",
+    "opn": "^5.4.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1",
@@ -20,7 +23,7 @@
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "preelectron-pack": "yarn build",
-    "electron-pack": "build --em.main=build/electron.js"
+    "electron-pack": "build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,5 +39,8 @@
     "electron": "^3.0.9",
     "electron-builder": "^20.34.0",
     "wait-on": "^3.2.0"
+  },
+  "build": {
+    "extraFiles": ["public/default-launch-items.json"]
   }
 }
