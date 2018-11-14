@@ -8,6 +8,7 @@ import lodash from "lodash"
 const {remote} = window.require("electron")
 const fs = window.require('fs')
 const util = window.require('util')
+const path = window.require("path")
 
 console.log(remote.app.getAppPath())
 
@@ -188,7 +189,7 @@ class App extends React.Component {
                   <StyledLaunchItem key={idx} onClick={this.handleLaunchItemClick(launchItem)}>
                     <div className="imageContainer">
                       <img
-                        src={`file://${remote.app.getAppPath()}/logo/${ launchItem.logo ? launchItem.logo : "default.png"  }`}
+                        src={`file://${remote.app.getAppPath()}${path.join('/', 'logo', '/')}${ launchItem.logo ? launchItem.logo : "default.png"  }`}
                         alt=""/>
                     </div>
                     <div className="labelContainer"> {launchItem.label}</div>
