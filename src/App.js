@@ -92,8 +92,36 @@ class App extends React.Component {
     }
   }
 
-  fetchAndApplyRemoteConfiguration = async (remoteConfigServerData) => {
+  fetchAndApplyRemoteConfiguration = async (localConfig, remoteConfigServer) => {
+    if (this.state.remoteConfigRequestInProgress) return
 
+    try {
+      this.setState({
+        remoteConfigRequestInProgress: true,
+      })
+
+      const {protocol, host, port} = localConfig.remoteConfigServer
+      const remoteConfigConnectionString = `${protocol}://${host}:${port}/config.json`
+      const remoteConfigResponse = await fetch(remoteConfigConnectionString)
+      const parsedRemoteConfig = await remoteConfigResponse.json()
+
+      console.log('config update received')
+
+      this.setState({
+        remoteConfigRequestInProgress: false,
+        remoteConfigFetchSuccess: true,
+        remoteConfigConnectionString,
+        launchItems: parsedRemoteConfig.launchItems,
+      })
+
+    } catch (err) {
+      console.error(err)
+      this.setState({
+        remoteConfigRequestInProgress: false,
+        remoteConfigFetchSuccess: false,
+        launchItems: localConfig.launchItems
+      })
+    }
   }
 
   componentDidMount = async () => {
@@ -108,35 +136,7 @@ class App extends React.Component {
       this.configUpdateTimer = setInterval(async () => {
         if (this.state.remoteConfigRequestInProgress) return
 
-        try {
-          console.log('config update started')
-          this.setState({
-            remoteConfigRequestInProgress: true,
-            remoteConfigFetchSuccess: null,
-          })
-
-          const { protocol, host, port } = localConfig.remoteConfigServer
-          const remoteConfigConnectionString = `${protocol}://${host}:${port}/config.json`
-          const remoteConfigResponse = await fetch(remoteConfigConnectionString)
-          const parsedRemoteConfig = await remoteConfigResponse.json()
-
-          console.log('config update received')
-
-          this.setState({
-            remoteConfigRequestInProgress: false,
-            remoteConfigFetchSuccess: true,
-            remoteConfigConnectionString,
-            launchItems: parsedRemoteConfig.launchItems,
-          })
-
-        } catch (err) {
-          console.error(err)
-          this.setState({
-            remoteConfigRequestInProgress: false,
-            remoteConfigFetchSuccess: false,
-            launchItems: localConfig.launchItems
-          })
-        }
+        await this.fetchAndApplyRemoteConfiguration(localConfig)
       }, localConfig.remoteConfigServer.updateInterval)
     }
   }
@@ -146,15 +146,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess } = this.state
+    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess} = this.state
     return (
       <StyledApp>
         <header>
-          Текущий пользователь: {username}
+          Текущий пользователь: <strong>{username}</strong>
         </header>
         <main>
           {
-            launchItems.map((launchItem, idx) => (
+            launchItems.filter(li => li.enabled).map((launchItem, idx) => (
               <StyledLaunchItem key={idx} onClick={this.handleLaunchItemClick(launchItem)}>
                 <img src={process.env.PUBLIC_URL + '/assets/logo-tesla.png'} alt=""/>
                 {launchItem.label}
@@ -166,7 +166,8 @@ class App extends React.Component {
           Sidebar
         </aside>
         <footer>
-          Версия: {appVersion}. Используется: {remoteConfigFetchSuccess ? remoteConfigConnectionString : "локальная конфигурация"}
+          Версия: {appVersion}.
+          Используется: {remoteConfigFetchSuccess ? remoteConfigConnectionString : "локальная конфигурация"}
         </footer>
       </StyledApp>
     );
