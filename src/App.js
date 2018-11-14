@@ -9,6 +9,8 @@ const {remote} = window.require("electron")
 const fs = window.require('fs')
 const util = window.require('util')
 
+console.log(remote.app.getAppPath())
+
 const readFile = util.promisify(fs.readFile)
 
 const username = window.require('username');
@@ -58,8 +60,20 @@ const StyledLaunchItem = styled.button`
   overflow: hidden;
   text-overflow: ellipsis;
   
-  img {
-    max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  .imageContainer {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    img {
+      max-width: 100%;
+    }
+  }
+  
+  .labelContainer {
+    width: 100%;
   }
 `
 
@@ -152,7 +166,7 @@ class App extends React.Component {
 
   render() {
     const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup} = this.state
-    const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g }))
+    const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
     console.log(allGroups)
     return (
       <StyledApp>
@@ -162,7 +176,6 @@ class App extends React.Component {
         <main>
           {
             launchItems.filter(li => {
-              debugger
               if (selectedGroup && li.groups && li.groups.includes(selectedGroup.value) && li.enabled) {
                 return true
               } else if (!selectedGroup && li.enabled) {
@@ -170,11 +183,17 @@ class App extends React.Component {
               } else {
                 return false
               }
-            }).map((launchItem, idx) => (
-              <StyledLaunchItem key={idx} onClick={this.handleLaunchItemClick(launchItem)}>
-                <img src={process.env.PUBLIC_URL + '/assets/logo-tesla.png'} alt=""/>
-                {launchItem.label}
-              </StyledLaunchItem>)
+            }).map((launchItem, idx) => {
+                return (
+                  <StyledLaunchItem key={idx} onClick={this.handleLaunchItemClick(launchItem)}>
+                    <div className="imageContainer">
+                      <img
+                        src={`file://${remote.app.getAppPath()}/logo/${ launchItem.logo ? launchItem.logo : "default.png"  }`}
+                        alt=""/>
+                    </div>
+                    <div className="labelContainer"> {launchItem.label}</div>
+                  </StyledLaunchItem>)
+              }
             )
           }
         </main>
@@ -183,10 +202,10 @@ class App extends React.Component {
                   placeholder="Все группы"
                   noOptionsMessage={() => "Добавьте группы елементам запуска чтобы они отобразились здесь"}
                   onChange={(selectedGroup) => {
-                    this.setState({ selectedGroup })
+                    this.setState({selectedGroup})
                   }}
                   value={this.state.selectedGroup}
-                  isClearable />
+                  isClearable/>
         </aside>
         <footer>
           Версия: {appVersion}.
