@@ -53,7 +53,7 @@ const StyledApp = styled.div`
   }
     
   header, main, aside, footer {
-    border: 1px solid midnightblue;
+    border: 1px solid #2c2e39;
   }
   
   aside {
@@ -71,7 +71,7 @@ const StyledApp = styled.div`
 `
 const StyledLaunchItem = styled.button`
   height: 207px;
-  border: 1px solid midnightblue;
+  border: 1px solid #2c2e39;
   overflow: hidden;
   text-overflow: ellipsis;
   
