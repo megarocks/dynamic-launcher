@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components'
 
+import Select from "react-select"
+
+import lodash from "lodash"
+
 const {remote} = window.require("electron")
 const fs = window.require('fs')
 const util = window.require('util')
@@ -70,7 +74,8 @@ class App extends React.Component {
       "enabled": true,
       "updateInterval": 5000
     },
-    "launchItems": []
+    "launchItems": [],
+    selectedGroup: null
   }
 
   handleLaunchItemClick = (launchItem) => async () => {
@@ -146,7 +151,9 @@ class App extends React.Component {
   }
 
   render() {
-    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess} = this.state
+    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup} = this.state
+    const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g }))
+    console.log(allGroups)
     return (
       <StyledApp>
         <header>
@@ -154,7 +161,16 @@ class App extends React.Component {
         </header>
         <main>
           {
-            launchItems.filter(li => li.enabled).map((launchItem, idx) => (
+            launchItems.filter(li => {
+              debugger
+              if (selectedGroup && li.groups && li.groups.includes(selectedGroup.value) && li.enabled) {
+                return true
+              } else if (!selectedGroup && li.enabled) {
+                return true
+              } else {
+                return false
+              }
+            }).map((launchItem, idx) => (
               <StyledLaunchItem key={idx} onClick={this.handleLaunchItemClick(launchItem)}>
                 <img src={process.env.PUBLIC_URL + '/assets/logo-tesla.png'} alt=""/>
                 {launchItem.label}
@@ -163,7 +179,14 @@ class App extends React.Component {
           }
         </main>
         <aside>
-          Sidebar
+          <Select options={allGroups}
+                  placeholder="Все группы"
+                  noOptionsMessage={() => "Добавьте группы елементам запуска чтобы они отобразились здесь"}
+                  onChange={(selectedGroup) => {
+                    this.setState({ selectedGroup })
+                  }}
+                  value={this.state.selectedGroup}
+                  isClearable />
         </aside>
         <footer>
           Версия: {appVersion}.

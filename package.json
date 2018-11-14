@@ -7,10 +7,12 @@
   "dependencies": {
     "electron-is-dev": "^1.0.1",
     "electron-store": "^2.0.0",
+    "lodash": "^4.17.11",
     "opn": "^5.4.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1",
+    "react-select": "^2.1.1",
     "styled-components": "^4.1.1",
     "username": "^4.0.0"
   },
@@ -41,6 +43,8 @@
     "wait-on": "^3.2.0"
   },
   "build": {
-    "extraFiles": ["config.json"]
+    "extraFiles": [
+      "config.json"
+    ]
   }
 }
