@@ -41,6 +41,6 @@
     "wait-on": "^3.2.0"
   },
   "build": {
-    "extraFiles": ["public/default-launch-items.json"]
+    "extraFiles": ["config.json"]
   }
 }

@@ -1,15 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components'
 
-import {version} from '../package.json';
-
 const {remote} = window.require("electron")
-console.log(remote.app.getAppPath())
-
 const fs = window.require('fs')
-const path = window.require('path')
+const util = window.require('util')
 
-const defaultLaunchItems = JSON.parse(fs.readFileSync( path.join('.', 'public', 'default-launch-items.json'), 'utf8'))
+const readFile = util.promisify(fs.readFile)
 
 const username = window.require('username');
 const opn = window.require("opn")
@@ -52,7 +48,6 @@ const StyledApp = styled.div`
     overflow-y: scroll;
   }
 `
-
 const StyledLaunchItem = styled.button`
   height: 207px;
   border: 1px solid midnightblue;
@@ -64,30 +59,105 @@ const StyledLaunchItem = styled.button`
   }
 `
 
-class App extends Component {
+class App extends React.Component {
 
-  onLaunchItemClick = (launchItem) => async () => {
+  state = {
+    appVersion: remote.app.getVersion(),
+    username: username.sync(),
+    "remoteConfigServer": {
+      "host": null,
+      "port": null,
+      "enabled": true,
+      "updateInterval": 5000
+    },
+    "launchItems": []
+  }
+
+  handleLaunchItemClick = (launchItem) => async () => {
     try {
-      const openResult =  await opn(launchItem.command)
-      console.log(openResult)
+      await opn(launchItem.command)
     } catch (e) {
       console.error(e.message)
-      alert(e.message)
+      remote.dialog.showErrorBox(`Ошибка при запуске приложения: ${launchItem.command}`, e.message)
     }
   }
 
+  readAndParseLocalConfigFile = async () => {
+    try {
+      const configFileContent = await readFile('config.json', 'utf8')
+      return JSON.parse(configFileContent)
+    } catch (err) {
+      console.error(err)
+      alert('Ошибка при чтении файла конфигурации')
+    }
+  }
+
+  fetchAndApplyRemoteConfiguration = async (remoteConfigServerData) => {
+
+  }
+
+  componentDidMount = async () => {
+    const localConfig = await this.readAndParseLocalConfigFile()
+    if (!localConfig) return
+
+    this.setState({
+      launchItems: localConfig.launchItems
+    })
+
+    if (localConfig.remoteConfigServer.enabled) {
+      this.configUpdateTimer = setInterval(async () => {
+        if (this.state.remoteConfigRequestInProgress) return
+
+        try {
+          console.log('config update started')
+          this.setState({
+            remoteConfigRequestInProgress: true,
+            remoteConfigFetchSuccess: null,
+          })
+
+          const { protocol, host, port } = localConfig.remoteConfigServer
+          const remoteConfigConnectionString = `${protocol}://${host}:${port}/config.json`
+          const remoteConfigResponse = await fetch(remoteConfigConnectionString)
+          const parsedRemoteConfig = await remoteConfigResponse.json()
+
+          console.log('config update received')
+
+          this.setState({
+            remoteConfigRequestInProgress: false,
+            remoteConfigFetchSuccess: true,
+            remoteConfigConnectionString,
+            launchItems: parsedRemoteConfig.launchItems,
+          })
+
+        } catch (err) {
+          console.error(err)
+          this.setState({
+            remoteConfigRequestInProgress: false,
+            remoteConfigFetchSuccess: false,
+            launchItems: localConfig.launchItems
+          })
+        }
+      }, localConfig.remoteConfigServer.updateInterval)
+    }
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.configUpdateTimer)
+  }
+
   render() {
+    const { launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess } = this.state
     return (
       <StyledApp>
         <header>
-          Текущий пользователь: {username.sync()}
+          Текущий пользователь: {username}
         </header>
         <main>
           {
-            defaultLaunchItems.map((button, idx) => (
-              <StyledLaunchItem key={idx} onClick={this.onLaunchItemClick(button)}>
+            launchItems.map((launchItem, idx) => (
+              <StyledLaunchItem key={idx} onClick={this.handleLaunchItemClick(launchItem)}>
                 <img src={process.env.PUBLIC_URL + '/assets/logo-tesla.png'} alt=""/>
-                {button.label}
+                {launchItem.label}
               </StyledLaunchItem>)
             )
           }
@@ -96,7 +166,7 @@ class App extends Component {
           Sidebar
         </aside>
         <footer>
-          Версия: {version}
+          Версия: {appVersion}. Используется: {remoteConfigFetchSuccess ? remoteConfigConnectionString : "локальная конфигурация"}
         </footer>
       </StyledApp>
     );
