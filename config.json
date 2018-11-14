@@ -15,7 +15,8 @@
     {
       "label": "Запустить калькулятор на винде",
       "command": "calc.exe",
-      "enabled": true
+      "enabled": true,
+      "logo": "tesla.png"
     }
   ]
 }

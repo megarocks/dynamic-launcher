@@ -6,11 +6,25 @@ import Select from "react-select"
 import lodash from "lodash"
 
 const {remote} = window.require("electron")
+
+remote.globalShortcut.register('CommandOrControl+Shift+K', () => {
+  remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
+})
+
+window.addEventListener('beforeunload', () => {
+  remote.globalShortcut.unregisterAll()
+})
+
+
 const fs = window.require('fs')
 const util = window.require('util')
 const path = window.require("path")
 
 console.log(remote.app.getAppPath())
+console.log(remote.process.platform)
+console.log(remote.process.execPath)
+console.log(remote.app.getPath('exe'))
+console.log(path.parse(remote.app.getPath('exe')))
 
 const readFile = util.promisify(fs.readFile)
 
@@ -165,6 +179,19 @@ class App extends React.Component {
     clearInterval(this.configUpdateTimer)
   }
 
+  createImageSourcePath = (launchItem) => {
+    let appPath;
+    if (remote.process.platform === 'darwin') {
+      appPath = remote.app.getAppPath()
+    } else {
+      appPath = path.parse(remote.process.execPath).dir
+    }
+
+    let logoPath = path.join('/', 'logo', '/')
+    if (launchItem.logo) { logoPath += launchItem.logo } else { logoPath += "default.png" }
+    return appPath + logoPath
+  }
+
   render() {
     const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup} = this.state
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
@@ -189,7 +216,7 @@ class App extends React.Component {
                   <StyledLaunchItem key={idx} onClick={this.handleLaunchItemClick(launchItem)}>
                     <div className="imageContainer">
                       <img
-                        src={`file://${remote.app.getAppPath()}${path.join('/', 'logo', '/')}${ launchItem.logo ? launchItem.logo : "default.png"  }`}
+                        src={`file://${this.createImageSourcePath(launchItem)}`}
                         alt=""/>
                     </div>
                     <div className="labelContainer"> {launchItem.label}</div>
