@@ -113,7 +113,8 @@ class App extends React.Component {
   readAndParseLocalConfigFile = async () => {
     try {
       const configFileContent = await readFile('config.json', 'utf8')
-      return JSON.parse(configFileContent.replace(/^\uFEFF/, ''))
+      const configWithoutBOM = configFileContent.replace(/^\uFEFF/, '')
+      return JSON.parse(configWithoutBOM)
     } catch (err) {
       console.error(err)
       alert('Ошибка при чтении файла конфигурации')
