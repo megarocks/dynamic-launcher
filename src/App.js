@@ -20,17 +20,11 @@ const fs = window.require('fs')
 const util = window.require('util')
 const path = window.require("path")
 
-console.log(remote.app.getAppPath())
-console.log(remote.process.platform)
-console.log(remote.process.execPath)
-console.log(remote.app.getPath('exe'))
-console.log(path.parse(remote.app.getPath('exe')))
 
 const readFile = util.promisify(fs.readFile)
 
 const username = window.require('username');
 const opn = window.require("opn")
-
 
 const StyledApp = styled.div`
   margin: 1em;
@@ -119,7 +113,7 @@ class App extends React.Component {
   readAndParseLocalConfigFile = async () => {
     try {
       const configFileContent = await readFile('config.json', 'utf8')
-      return JSON.parse(configFileContent)
+      return JSON.parse(configFileContent.replace(/^\uFEFF/, ''))
     } catch (err) {
       console.error(err)
       alert('Ошибка при чтении файла конфигурации')
@@ -195,7 +189,6 @@ class App extends React.Component {
   render() {
     const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup} = this.state
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
-    console.log(allGroups)
     return (
       <StyledApp>
         <header>
@@ -213,7 +206,7 @@ class App extends React.Component {
               }
             }).map((launchItem, idx) => {
                 return (
-                  <StyledLaunchItem key={idx} onClick={this.handleLaunchItemClick(launchItem)}>
+                  <StyledLaunchItem key={idx} onClick={lodash.debounce(this.handleLaunchItemClick(launchItem), 500)}>
                     <div className="imageContainer">
                       <img
                         src={`file://${this.createImageSourcePath(launchItem)}`}
