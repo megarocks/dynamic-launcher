@@ -28,6 +28,7 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "preelectron-pack": "yarn build",
     "electron-pack": "build --win --ia32",
+    "prerelease": "yarn build",
     "release": "build --win --ia32"
   },
   "eslintConfig": {

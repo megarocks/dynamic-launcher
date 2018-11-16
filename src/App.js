@@ -71,11 +71,13 @@ const StyledLaunchItem = styled.button`
   
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   
   .imageContainer {
     height: 150px;
     display: flex;
     align-items: center;
+    justify-content: center;
     img {
       max-width: 100%;
     }
@@ -103,10 +105,10 @@ class App extends React.Component {
 
   handleLaunchItemClick = (launchItem) => async () => {
     try {
-      await opn(launchItem.command)
+      await opn(launchItem.FileName)
     } catch (e) {
       console.error(e.message)
-      remote.dialog.showErrorBox(`Ошибка при запуске приложения: ${launchItem.command}`, e.message)
+      remote.dialog.showErrorBox(`Ошибка при запуске приложения: ${launchItem.FileName}`, e.message)
     }
   }
 
@@ -121,7 +123,7 @@ class App extends React.Component {
     }
   }
 
-  fetchAndApplyRemoteConfiguration = async (localConfig, remoteConfigServer) => {
+  fetchAndApplyRemoteConfiguration = async (localConfig) => {
     if (this.state.remoteConfigRequestInProgress) return
 
     try {
@@ -133,8 +135,6 @@ class App extends React.Component {
       const remoteConfigConnectionString = `${protocol}://${host}:${port}/config.json`
       const remoteConfigResponse = await fetch(remoteConfigConnectionString)
       const parsedRemoteConfig = await remoteConfigResponse.json()
-
-      console.log('config update received')
 
       this.setState({
         remoteConfigRequestInProgress: false,
@@ -183,7 +183,7 @@ class App extends React.Component {
     }
 
     let logoPath = path.join('/', 'logo', '/')
-    if (launchItem.logo) { logoPath += launchItem.logo } else { logoPath += "default.png" }
+    if (launchItem.icon) { logoPath += launchItem.icon } else { logoPath += "default.png" }
     return appPath + logoPath
   }
 
@@ -198,11 +198,15 @@ class App extends React.Component {
         <main>
           {
             launchItems.filter(li => {
-              if (selectedGroup && li.groups && li.groups.includes(selectedGroup.value) && li.enabled) {
+
+              if ("enabled" in li && !li.enabled) return false
+
+              if (selectedGroup && li.groups && li.groups.includes(selectedGroup.value)) {
                 return true
-              } else if (!selectedGroup && li.enabled) {
+              } else if (!selectedGroup) {
                 return true
-              } else {
+              }
+              else {
                 return false
               }
             }).map((launchItem, idx) => {
@@ -213,7 +217,7 @@ class App extends React.Component {
                         src={`file://${this.createImageSourcePath(launchItem)}`}
                         alt=""/>
                     </div>
-                    <div className="labelContainer"> {launchItem.label}</div>
+                    <div className="labelContainer"> {launchItem.caption}</div>
                   </StyledLaunchItem>)
               }
             )

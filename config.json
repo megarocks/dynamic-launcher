@@ -8,19 +8,62 @@
   },
   "launchItems": [
     {
-      "label": "Открыть гугль в браузере",
-      "command": "https://google.com",
-      "enabled": true
+      "caption": "Открыть какое-нибудь приложение",
+      "icon": "default.png",
+      "List": [
+        {
+          "caption": "Блокнот",
+          "FileName": "Калькулятор"
+        },
+        {
+          "caption": "Калькулятор",
+          "FileName": "ETKStartAccessories"
+        },
+        {
+          "caption": "WinRar",
+          "FileName": "C:\\Program Files\\WinRAR\\WinRAR.exe"
+        }
+      ],
+      "groups": ["легковые"]
     },
     {
-      "label": "Запустить калькулятор на винде",
-      "command": "calc.exe",
-      "enabled": true
+      "caption": "Открыть документ",
+      "icon": "default.png",
+      "List": [
+        {
+          "caption": "Google.com",
+          "FileName": "https://goolge.com"
+        },
+        {
+          "caption": "PDF файл",
+          "FileName": "http://www.africau.edu/images/default/sample.pdf"
+        }
+      ],
+      "groups": ["грузовые", "спец-техника"]
     },
     {
-      "label": "Запустить калькулятор на винде",
-      "command": "calc.exe",
-      "enabled": true
+      "caption": "BMW",
+      "icon": "BMW.png",
+      "List": [
+        {
+          "caption": "BMW ETK Online Vin",
+          "FileName": "BMW ETK Online Vin.exe"
+        },
+        {
+          "caption": "BMW ETK Accessories Online",
+          "FileName": "ETKStartAccessories.exe"
+        },
+        {
+          "caption": "BMW ASAP Online",
+          "FileName": "BMW ASAP Online.exe"
+        }
+      ],
+      "groups": ["легковые"]
+    },
+    {
+      "enabled": true,
+      "caption": "Скрытая программа",
+      "FileName": "C:\\Windows\\write.exe"
     }
   ]
 }
