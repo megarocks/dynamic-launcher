@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components'
 
 import Select from "react-select"
-
 import lodash from "lodash"
+
+import LaunchItem from "./LaunchItem"
 
 const {remote} = window.require("electron")
 
@@ -18,13 +19,11 @@ window.addEventListener('beforeunload', () => {
 
 const fs = window.require('fs')
 const util = window.require('util')
-const path = window.require("path")
 
 
 const readFile = util.promisify(fs.readFile)
 
 const username = window.require('username');
-const opn = window.require("opn")
 
 const StyledApp = styled.div`
   margin: 1em;
@@ -63,30 +62,6 @@ const StyledApp = styled.div`
     overflow-y: scroll;
   }
 `
-const StyledLaunchItem = styled.button`
-  height: 207px;
-  border: 1px solid #2c2e39;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  
-  .imageContainer {
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    img {
-      max-width: 100%;
-    }
-  }
-  
-  .labelContainer {
-    width: 100%;
-  }
-`
 
 class App extends React.Component {
 
@@ -101,15 +76,6 @@ class App extends React.Component {
     },
     "launchItems": [],
     selectedGroup: null
-  }
-
-  handleLaunchItemClick = (launchItem) => async () => {
-    try {
-      await opn(launchItem.FileName)
-    } catch (e) {
-      console.error(e.message)
-      remote.dialog.showErrorBox(`Ошибка при запуске приложения: ${launchItem.FileName}`, e.message)
-    }
   }
 
   readAndParseLocalConfigFile = async () => {
@@ -174,19 +140,6 @@ class App extends React.Component {
     clearInterval(this.configUpdateTimer)
   }
 
-  createImageSourcePath = (launchItem) => {
-    let appPath;
-    if (remote.process.platform === 'darwin') {
-      appPath = remote.app.getAppPath()
-    } else {
-      appPath = path.parse(remote.process.execPath).dir
-    }
-
-    let logoPath = path.join('/', 'logo', '/')
-    if (launchItem.icon) { logoPath += launchItem.icon } else { logoPath += "default.png" }
-    return appPath + logoPath
-  }
-
   render() {
     const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup} = this.state
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
@@ -209,18 +162,7 @@ class App extends React.Component {
               else {
                 return false
               }
-            }).map((launchItem, idx) => {
-                return (
-                  <StyledLaunchItem key={idx} onClick={lodash.debounce(this.handleLaunchItemClick(launchItem), 500)}>
-                    <div className="imageContainer">
-                      <img
-                        src={`file://${this.createImageSourcePath(launchItem)}`}
-                        alt=""/>
-                    </div>
-                    <div className="labelContainer"> {launchItem.caption}</div>
-                  </StyledLaunchItem>)
-              }
-            )
+            }).map((launchItem, idx) => <LaunchItem idx={idx} launchItem={launchItem} />)
           }
         </main>
         <aside>
