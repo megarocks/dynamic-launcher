@@ -6,6 +6,8 @@
     "enabled": false,
     "updateInterval": 5000
   },
+  "fetchNews": true,
+  "fetchInfo": true,
   "launchItems": [
     {
       "caption": "Открыть какое-нибудь приложение",

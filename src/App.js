@@ -4,8 +4,10 @@ import Select from "react-select"
 import lodash from "lodash"
 import CssBaseline from '@material-ui/core/CssBaseline';
 import 'typeface-roboto';
+import Paper from '@material-ui/core/Paper'
 
 import LaunchItem from "./LaunchItem"
+import RemoteInfo from "./RemoteInfo"
 
 const {remote} = window.require("electron")
 const fs = window.require('fs')
@@ -26,11 +28,11 @@ window.addEventListener('beforeunload', () => {
 })
 
 const StyledApp = styled.div`
-  margin: 1em;
+  margin: 0.5em;
   display: grid;
   grid-template-columns: 3fr 1fr;
-  grid-template-rows: 2em calc(100vh - 8em) 2em;
-  grid-gap: 1em;
+  grid-template-rows: 2em calc(100vh - 6em) 2em;
+  grid-gap: 0.5em;
   
   header,
   footer {
@@ -45,12 +47,15 @@ const StyledApp = styled.div`
     padding: 0 1em;
   }
     
-  header, main, aside, footer {
+  header, main, footer {
     border: 1px solid #2c2e39;
   }
   
   aside {
-    padding: 1em;
+    display: grid;
+    
+    grid-template-rows: 6fr minmax(200px, 1fr) minmax(200px, 1fr);
+    grid-gap: 0.5em;
   }
   
   main {
@@ -122,9 +127,8 @@ class App extends React.Component {
     const localConfig = await this.readAndParseLocalConfigFile()
     if (!localConfig) return
 
-    this.setState({
-      launchItems: localConfig.launchItems
-    })
+    const {launchItems, fetchInfo, fetchNews, remoteConfigServer} = localConfig
+    this.setState({launchItems, fetchInfo, fetchNews, remoteConfigServer})
 
     if (localConfig.remoteConfigServer.enabled) {
       this.configUpdateTimer = setInterval(async () => {
@@ -140,7 +144,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup} = this.state
+    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup, fetchNews, fetchInfo, remoteConfigServer} = this.state
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
     return (
       <React.Fragment>
@@ -163,18 +167,30 @@ class App extends React.Component {
                 else {
                   return false
                 }
-              }).map((launchItem, idx) => <LaunchItem idx={idx} launchItem={launchItem} />)
+              }).map((launchItem, idx) => <LaunchItem idx={idx} launchItem={launchItem}/>)
             }
           </main>
           <aside>
-            <Select options={allGroups}
-                    placeholder="Все группы"
-                    noOptionsMessage={() => "Добавьте группы елементам запуска чтобы они отобразились здесь"}
-                    onChange={(selectedGroup) => {
-                      this.setState({selectedGroup})
-                    }}
-                    value={this.state.selectedGroup}
-                    isClearable/>
+            <Paper>
+              <Select options={allGroups}
+                      placeholder="Все группы"
+                      noOptionsMessage={() => "Добавьте группы елементам запуска чтобы они отобразились здесь"}
+                      onChange={(selectedGroup) => {
+                        this.setState({selectedGroup})
+                      }}
+                      value={this.state.selectedGroup}
+                      isClearable/>
+            </Paper>
+            <Paper> {
+              fetchNews &&
+              <RemoteInfo title="Новости" serverParams={{...remoteConfigServer, fileName: "news"}}/>
+            }
+            </Paper>
+            <Paper> {
+              fetchInfo &&
+              <RemoteInfo title="Важная информация" serverParams={{...remoteConfigServer, fileName: "info"}}/>
+            }
+            </Paper>
           </aside>
           <footer>
             Версия: {appVersion}.

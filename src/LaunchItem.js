@@ -97,7 +97,7 @@ class LaunchItem extends React.Component {
               src={`file://${this.createImageSourcePath(launchItem)}`}
               alt=""/>
           </div>
-          <div className="labelContainer"> {launchItem.caption}</div>
+          <div className="labelContainer">{launchItem.caption}</div>
         </StyledLaunchItem>
         </Paper>
         {
