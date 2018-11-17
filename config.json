@@ -15,11 +15,11 @@
       "List": [
         {
           "caption": "Блокнот",
-          "FileName": "Калькулятор"
+          "FileName": "notepad.exe"
         },
         {
           "caption": "Калькулятор",
-          "FileName": "ETKStartAccessories"
+          "FileName": "calc.exe"
         },
         {
           "caption": "WinRar",

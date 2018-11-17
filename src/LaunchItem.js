@@ -52,6 +52,7 @@ class LaunchItem extends React.Component {
         if (launchItem.List) {
           this.setState({menuOpen: true})
         } else if (launchItem.FileName) {
+          this.setState({menuOpen: false})
           await opn(launchItem.FileName)
         } else {
           remote.dialog.showErrorBox('Проверьте конфигурацию елемента запуска', 'Не указано ассоциированное приложение')
