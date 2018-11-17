@@ -1,30 +1,29 @@
 import React from 'react';
 import styled from 'styled-components'
-
 import Select from "react-select"
 import lodash from "lodash"
 import CssBaseline from '@material-ui/core/CssBaseline';
+import 'typeface-roboto';
 
 import LaunchItem from "./LaunchItem"
 
 const {remote} = window.require("electron")
+const fs = window.require('fs')
+const util = window.require('util')
+const readFile = util.promisify(fs.readFile)
+const username = window.require('username');
 
+
+// https://material-ui.com/style/typography/#migration-to-typography-v2
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
+//enable developer tools in compiled version
 remote.globalShortcut.register('CommandOrControl+Shift+K', () => {
   remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
 })
-
 window.addEventListener('beforeunload', () => {
   remote.globalShortcut.unregisterAll()
 })
-
-
-const fs = window.require('fs')
-const util = window.require('util')
-
-
-const readFile = util.promisify(fs.readFile)
-
-const username = window.require('username');
 
 const StyledApp = styled.div`
   margin: 1em;
@@ -65,7 +64,6 @@ const StyledApp = styled.div`
 `
 
 class App extends React.Component {
-
   state = {
     appVersion: remote.app.getVersion(),
     username: username.sync(),

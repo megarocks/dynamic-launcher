@@ -16,6 +16,7 @@
     "react-scripts": "2.1.1",
     "react-select": "^2.1.1",
     "styled-components": "^4.1.1",
+    "typeface-roboto": "^0.0.54",
     "username": "^4.0.0"
   },
   "main": "public/electron.js",
