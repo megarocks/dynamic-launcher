@@ -127,8 +127,8 @@ class App extends React.Component {
     const localConfig = await this.readAndParseLocalConfigFile()
     if (!localConfig) return
 
-    const {launchItems, fetchInfo, fetchNews, remoteConfigServer} = localConfig
-    this.setState({launchItems, fetchInfo, fetchNews, remoteConfigServer})
+    const {launchItems, remoteConfigServer} = localConfig
+    this.setState({launchItems, remoteConfigServer})
 
     if (localConfig.remoteConfigServer.enabled) {
       this.configUpdateTimer = setInterval(async () => {
@@ -144,7 +144,8 @@ class App extends React.Component {
   }
 
   render() {
-    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup, fetchNews, fetchInfo, remoteConfigServer} = this.state
+    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup, remoteConfigServer} = this.state
+    const { fetchNews, fetchInfo } = remoteConfigServer
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
     return (
       <React.Fragment>
