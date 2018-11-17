@@ -56,8 +56,8 @@ const StyledApp = styled.div`
   main {
     padding: 1em;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
-    grid-auto-rows: 207px;
+    grid-template-columns: repeat(auto-fill, 100px);
+    grid-auto-rows: 140px;
     grid-gap: 1em;
     overflow-y: scroll;
   }

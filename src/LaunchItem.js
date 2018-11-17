@@ -8,7 +8,7 @@ const opn = window.require("opn")
 const path = window.require("path")
 
 const StyledLaunchItem = styled.button`
-  height: 207px;
+  height: 140px;
   border: 1px solid #2c2e39;
   overflow: hidden;
   text-overflow: ellipsis;
