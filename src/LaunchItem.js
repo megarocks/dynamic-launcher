@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import lodash from "lodash";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper'
 
 const {remote} = window.require("electron")
 const opn = window.require("opn")
@@ -10,7 +11,7 @@ const path = window.require("path")
 
 const StyledLaunchItem = styled.button`
   height: 140px;
-  border: 1px solid #2c2e39;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   
@@ -83,6 +84,7 @@ class LaunchItem extends React.Component {
     const {idx, launchItem} = this.props
     return (
       <React.Fragment>
+        <Paper>
         <StyledLaunchItem
           ref={this.anchorElRef}
           aria-owns={this.anchorElRef.current ? `launch-items-list-${idx}` : undefined}
@@ -97,6 +99,7 @@ class LaunchItem extends React.Component {
           </div>
           <div className="labelContainer"> {launchItem.caption}</div>
         </StyledLaunchItem>
+        </Paper>
         {
           launchItem.List && launchItem.List.length &&
           <Menu
