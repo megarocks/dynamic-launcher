@@ -5,6 +5,7 @@ import lodash from "lodash"
 import CssBaseline from '@material-ui/core/CssBaseline';
 import 'typeface-roboto';
 import Paper from '@material-ui/core/Paper'
+import TextField from '@material-ui/core/TextField';
 
 import LaunchItem from "./LaunchItem"
 import RemoteInfo from "./RemoteInfo"
@@ -66,6 +67,14 @@ const StyledApp = styled.div`
     grid-gap: 1em;
     overflow-y: scroll;
   }
+  
+  .App-launchItemSearch {
+    width: 100%;
+  }
+  
+  .App-filters {
+    padding: 0.5em;
+  }
 `
 
 class App extends React.Component {
@@ -79,7 +88,8 @@ class App extends React.Component {
       "updateInterval": 5000
     },
     "launchItems": [],
-    selectedGroup: null
+    selectedGroup: null,
+    textFilter: ""
   }
 
   readAndParseLocalConfigFile = async () => {
@@ -144,7 +154,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup, remoteConfigServer} = this.state
+    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup, remoteConfigServer, textFilter} = this.state
     const { fetchNews, fetchInfo } = remoteConfigServer
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
     return (
@@ -168,11 +178,26 @@ class App extends React.Component {
                 else {
                   return false
                 }
+              }).filter(li => {
+                if (textFilter.length && li.caption.trim().toLowerCase().includes(textFilter.toLowerCase())) return true
+                  else if (!textFilter.length) return true
+                else return false
               }).map((launchItem, idx) => <LaunchItem idx={idx} launchItem={launchItem}/>)
             }
           </main>
           <aside>
-            <Paper>
+            <Paper className="App-filters">
+              <TextField
+                id="standard-search"
+                label="Поиск"
+                type="search"
+                className="App-launchItemSearch"
+                margin="normal"
+                variant="outlined"
+                onChange={e => {
+                  this.setState({ textFilter: e.target.value })
+                }}
+              />
               <Select options={allGroups}
                       placeholder="Все группы"
                       noOptionsMessage={() => "Добавьте группы елементам запуска чтобы они отобразились здесь"}
