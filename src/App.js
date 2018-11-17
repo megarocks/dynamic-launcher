@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import Select from "react-select"
 import lodash from "lodash"
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import LaunchItem from "./LaunchItem"
 
@@ -144,42 +145,46 @@ class App extends React.Component {
     const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup} = this.state
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
     return (
-      <StyledApp>
-        <header>
-          Текущий пользователь: <strong>{username}</strong>
-        </header>
-        <main>
-          {
-            launchItems.filter(li => {
+      <React.Fragment>
+        <CssBaseline/>
+        <StyledApp>
+          <header>
+            Текущий пользователь: <strong>{username}</strong>
+          </header>
+          <main>
+            {
+              launchItems.filter(li => {
 
-              if ("enabled" in li && !li.enabled) return false
+                if ("enabled" in li && !li.enabled) return false
 
-              if (selectedGroup && li.groups && li.groups.includes(selectedGroup.value)) {
-                return true
-              } else if (!selectedGroup) {
-                return true
-              }
-              else {
-                return false
-              }
-            }).map((launchItem, idx) => <LaunchItem idx={idx} launchItem={launchItem} />)
-          }
-        </main>
-        <aside>
-          <Select options={allGroups}
-                  placeholder="Все группы"
-                  noOptionsMessage={() => "Добавьте группы елементам запуска чтобы они отобразились здесь"}
-                  onChange={(selectedGroup) => {
-                    this.setState({selectedGroup})
-                  }}
-                  value={this.state.selectedGroup}
-                  isClearable/>
-        </aside>
-        <footer>
-          Версия: {appVersion}.
-          Используется: {remoteConfigFetchSuccess ? remoteConfigConnectionString : "локальная конфигурация"}
-        </footer>
-      </StyledApp>
+                if (selectedGroup && li.groups && li.groups.includes(selectedGroup.value)) {
+                  return true
+                } else if (!selectedGroup) {
+                  return true
+                }
+                else {
+                  return false
+                }
+              }).map((launchItem, idx) => <LaunchItem idx={idx} launchItem={launchItem} />)
+            }
+          </main>
+          <aside>
+            <Select options={allGroups}
+                    placeholder="Все группы"
+                    noOptionsMessage={() => "Добавьте группы елементам запуска чтобы они отобразились здесь"}
+                    onChange={(selectedGroup) => {
+                      this.setState({selectedGroup})
+                    }}
+                    value={this.state.selectedGroup}
+                    isClearable/>
+          </aside>
+          <footer>
+            Версия: {appVersion}.
+            Используется: {remoteConfigFetchSuccess ? remoteConfigConnectionString : "локальная конфигурация"}
+          </footer>
+        </StyledApp>
+      </React.Fragment>
+
     );
   }
 }

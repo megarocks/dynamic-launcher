@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components'
-import Popover from 'react-simple-popover';
 import lodash from "lodash";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const {remote} = window.require("electron")
 const opn = window.require("opn")
@@ -16,6 +17,7 @@ const StyledLaunchItem = styled.button`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  cursor: pointer;
   
   .imageContainer {
     height: 150px;
@@ -34,13 +36,30 @@ const StyledLaunchItem = styled.button`
 
 class LaunchItem extends React.Component {
 
-  handleLaunchItemClick = (launchItem) => async () => {
-    try {
-      await opn(launchItem.FileName)
-    } catch (e) {
-      console.error(e.message)
-      remote.dialog.showErrorBox(`Ошибка при запуске приложения: ${launchItem.FileName}`, e.message)
-    }
+  constructor(props) {
+    super(props)
+    this.anchorElRef = React.createRef();
+  }
+
+  state = {
+    menuOpen: false
+  }
+
+  handleLaunchItemClick = (launchItem) => {
+    return lodash.debounce(async () => {
+      try {
+        if (launchItem.List) {
+          this.setState({menuOpen: true})
+        } else if (launchItem.FileName) {
+          await opn(launchItem.FileName)
+        } else {
+          remote.dialog.showErrorBox('Проверьте конфигурацию елемента запуска', 'Не указано ассоциированное приложение')
+        }
+      } catch (e) {
+        console.error(e.message)
+        remote.dialog.showErrorBox(`Ошибка при запуске приложения: ${launchItem.FileName}`, e.message)
+      }
+    }, 150)
   }
 
   createImageSourcePath = (launchItem) => {
@@ -52,22 +71,52 @@ class LaunchItem extends React.Component {
     }
 
     let logoPath = path.join('/', 'logo', '/')
-    if (launchItem.icon) { logoPath += launchItem.icon } else { logoPath += "default.png" }
+    if (launchItem.icon) {
+      logoPath += launchItem.icon
+    } else {
+      logoPath += "default.png"
+    }
     return appPath + logoPath
   }
 
   render = () => {
-    const { idx, launchItem } = this.props
-
+    const {idx, launchItem} = this.props
     return (
-      <StyledLaunchItem key={idx} onClick={lodash.debounce(this.handleLaunchItemClick(launchItem), 500)}>
-        <div className="imageContainer">
-          <img
-            src={`file://${this.createImageSourcePath(launchItem)}`}
-            alt=""/>
-        </div>
-        <div className="labelContainer"> {launchItem.caption}</div>
-      </StyledLaunchItem>
+      <React.Fragment>
+        <StyledLaunchItem
+          ref={this.anchorElRef}
+          aria-owns={this.anchorElRef.current ? `launch-items-list-${idx}` : undefined}
+          aria-haspopup="true"
+          key={idx}
+          onClick={this.handleLaunchItemClick(launchItem)}
+        >
+          <div className="imageContainer">
+            <img
+              src={`file://${this.createImageSourcePath(launchItem)}`}
+              alt=""/>
+          </div>
+          <div className="labelContainer"> {launchItem.caption}</div>
+        </StyledLaunchItem>
+        {
+          launchItem.List && launchItem.List.length &&
+          <Menu
+            id={`launch-items-list-${idx}`}
+            anchorEl={this.anchorElRef.current}
+            open={this.state.menuOpen}
+            onClose={() => {
+              this.setState({menuOpen: false})
+            }}
+          >
+            {
+              launchItem.List.map((subListItem, i) => {
+                return <MenuItem key={i}
+                                 onClick={this.handleLaunchItemClick(subListItem)}>{subListItem.caption}</MenuItem>
+              })
+            }
+          </Menu>
+        }
+      </React.Fragment>
+
     )
   }
 }
