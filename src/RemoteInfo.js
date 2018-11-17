@@ -72,7 +72,7 @@ RemoteInfo.propTypes = {
     refreshInterval: PropTypes.number,
     protocol: PropTypes.oneOf(['http', 'https']).isRequired,
     host: PropTypes.string.isRequired,
-    port: PropTypes.string.isRequired,
+    port: PropTypes.number.isRequired,
     fileName: PropTypes.string.isRequired
   }).isRequired,
   title: PropTypes.string

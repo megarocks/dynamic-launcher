@@ -19,10 +19,9 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1366,
     height: 768,
-    webPreferences: {
-      allowRunningInsecureContent: true,
-      webSecurity: false
-    }
+    resizable: false,
+    movable: false,
+    fullscreen: true
   });
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   mainWindow.on('closed', () => mainWindow = null);

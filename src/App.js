@@ -182,7 +182,7 @@ class App extends React.Component {
                 if (textFilter.length && li.caption.trim().toLowerCase().includes(textFilter.toLowerCase())) return true
                   else if (!textFilter.length) return true
                 else return false
-              }).map((launchItem, idx) => <LaunchItem idx={idx} launchItem={launchItem}/>)
+              }).map((launchItem, idx) => <LaunchItem key={idx} launchItem={launchItem}/>)
             }
           </main>
           <aside>
@@ -205,6 +205,7 @@ class App extends React.Component {
                         this.setState({selectedGroup})
                       }}
                       value={this.state.selectedGroup}
+                      isSearchable={false}
                       isClearable/>
             </Paper>
             <Paper> {
