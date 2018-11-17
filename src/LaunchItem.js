@@ -21,7 +21,7 @@ const StyledLaunchItem = styled.button`
   cursor: pointer;
   
   .imageContainer {
-    height: 150px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;

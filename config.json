@@ -64,7 +64,13 @@
     },
     {
       "enabled": true,
-      "caption": "Скрытая программа",
+      "caption": "Явно открытая программа",
+      "icon": "Alfa.png",
+      "FileName": "C:\\Windows\\write.exe"
+    },
+    {
+      "enabled": false,
+      "caption": "Явно скрытая программа",
       "FileName": "C:\\Windows\\write.exe"
     }
   ]

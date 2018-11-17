@@ -49,7 +49,8 @@ const StyledApp = styled.div`
   }
     
   header, main, footer {
-    border: 1px solid #2c2e39;
+    border-radius: 4px;
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
   }
   
   aside {
@@ -155,7 +156,7 @@ class App extends React.Component {
 
   render() {
     const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup, remoteConfigServer, textFilter} = this.state
-    const { fetchNews, fetchInfo } = remoteConfigServer
+    const {fetchNews, fetchInfo} = remoteConfigServer
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
     return (
       <React.Fragment>
@@ -180,7 +181,7 @@ class App extends React.Component {
                 }
               }).filter(li => {
                 if (textFilter.length && li.caption.trim().toLowerCase().includes(textFilter.toLowerCase())) return true
-                  else if (!textFilter.length) return true
+                else if (!textFilter.length) return true
                 else return false
               }).map((launchItem, idx) => <LaunchItem key={idx} launchItem={launchItem}/>)
             }
@@ -195,7 +196,7 @@ class App extends React.Component {
                 margin="normal"
                 variant="outlined"
                 onChange={e => {
-                  this.setState({ textFilter: e.target.value })
+                  this.setState({textFilter: e.target.value})
                 }}
               />
               <Select options={allGroups}
@@ -225,7 +226,6 @@ class App extends React.Component {
           </footer>
         </StyledApp>
       </React.Fragment>
-
     );
   }
 }
