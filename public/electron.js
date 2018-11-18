@@ -1,5 +1,5 @@
 const {app, BrowserWindow} = require('electron');
-const { autoUpdater } = require('electron-updater')
+const {autoUpdater} = require('electron-updater')
 const log = require('electron-log');
 
 const path = require('path')
@@ -19,6 +19,12 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     resizable: false,
     movable: false,
+    width: 1366,
+    height: 768,
+    webPreferences: {
+      allowRunningInsecureContent: true,
+      webSecurity: false
+    },
   });
   mainWindow.maximize()
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
