@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import {AutoSizer, List} from 'react-virtualized';
 
@@ -26,7 +27,7 @@ function LaunchItemsList({launchItems}) {
     const firstElementInRowIdx = index * 8
     const rowElements = launchItems.slice(firstElementInRowIdx, firstElementInRowIdx + 8)
     return (
-      <div style={style} className="StyledList--row">
+      <div key={key} style={style} className="StyledList--row">
         {rowElements.map((el, idx) => <LaunchItem key={key + idx} launchItem={el}/>)}
       </div>
     )
@@ -44,6 +45,10 @@ function LaunchItemsList({launchItems}) {
       )}
     </AutoSizer>
   )
+}
+
+LaunchItemsList.propTypes = {
+  launchItems: PropTypes.array.isRequired
 }
 
 export default LaunchItemsList
