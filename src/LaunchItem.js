@@ -85,6 +85,10 @@ class LaunchItem extends React.Component {
 
   render = () => {
     const {idx, launchItem} = this.props
+
+    if (!launchItem) return (
+      <StyledLaunchItem>...</StyledLaunchItem>
+    )
     return (
       <React.Fragment>
         <Paper>
@@ -122,7 +126,6 @@ class LaunchItem extends React.Component {
           </Menu>
         }
       </React.Fragment>
-
     )
   }
 }
