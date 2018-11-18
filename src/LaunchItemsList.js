@@ -5,10 +5,12 @@ import {AutoSizer, List} from 'react-virtualized';
 
 import LaunchItem from "./LaunchItem"
 
+const itemsPerRow = 8
+
 const StyledList = styled(List)`    
   .StyledList--row {
     display: grid;
-    grid-template-columns: repeat(8, 100px);
+    grid-template-columns: repeat(${itemsPerRow}, 100px);
     grid-template-rows: 140px;
     grid-gap: 1em;
     justify-content: center;
@@ -16,7 +18,6 @@ const StyledList = styled(List)`
 `
 
 function LaunchItemsList({launchItems}) {
-
   function rowRenderer({
                          key,         // Unique key within array of rows
                          index,       // Index of row within collection
@@ -24,8 +25,8 @@ function LaunchItemsList({launchItems}) {
                          isVisible,   // This row is visible within the List (eg it is not an overscanned row)
                          style        // Style object to be applied to row (to position it)
                        }) {
-    const firstElementInRowIdx = index * 8
-    const rowElements = launchItems.slice(firstElementInRowIdx, firstElementInRowIdx + 8)
+    const firstElementInRowIdx = index * itemsPerRow
+    const rowElements = launchItems.slice(firstElementInRowIdx, firstElementInRowIdx + itemsPerRow)
     return (
       <div key={key} style={style} className="StyledList--row">
         {rowElements.map((el, idx) => <LaunchItem key={key + idx} launchItem={el}/>)}
@@ -41,7 +42,7 @@ function LaunchItemsList({launchItems}) {
           height={height}
           rowHeight={156} //140px + 1em
           rowRenderer={rowRenderer}
-          rowCount={launchItems.length > 8 ? Math.ceil(launchItems.length / 8) : launchItems.length}/>
+          rowCount={launchItems.length > itemsPerRow ? Math.ceil(launchItems.length / itemsPerRow) : launchItems.length}/>
       )}
     </AutoSizer>
   )
