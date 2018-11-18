@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState, useEffect} from 'react';
 import styled from 'styled-components'
 import PropTypes from 'prop-types';
 
@@ -15,56 +16,46 @@ const StyledRemoteInfo = styled.div`
   }
 `
 
-class RemoteInfo extends React.Component {
+async function fetchRemoteData(props) {
+  const {serverParams: {protocol, host, port, fileName} = {}} = props;
+  const connectionString = `${protocol}://${host}:${port}/${fileName}.json`
+  const response = await fetch(connectionString)
+  return response.json()
+}
 
-  state = {
-    list: []
-  }
+const RemoteInfo = (props) => {
+  const [list, setList] = useState([])
 
-  componentDidMount = () => {
-    const {serverParams: { refreshInterval = 10000 } = {}} = this.props;
-    this.refreshTicker = setInterval(this.fetchRemoteDataAndUpdateState, refreshInterval)
-  }
+  useEffect(() => {
+    const {serverParams: {refreshInterval = 10000} = {}} = props;
+    const refreshTicker = setInterval(async () => {
+      try {
+        const remoteData = await fetchRemoteData(props)
+        setList(remoteData)
+      } catch (e) {
+        console.error(e)
+        setList([{text: 'Сервер информации не доступен'}])
+      }
+    }, refreshInterval)
 
-  fetchRemoteDataAndUpdateState = async () => {
-    try {
-      const {serverParams: { protocol, host, port, fileName } = {}} = this.props;
-      const connectionString =  `${protocol}://${host}:${port}/${fileName}.json`
-      const response = await fetch(connectionString)
-      const parsedResponse = await response.json()
-
-      this.setState({
-        list: parsedResponse,
-      })
-    } catch (err) {
-      console.error(err)
-      this.setState({
-        list: [{text: 'Сервер информации не доступен'}],
-      })
+    return function cleanUp() {
+      clearInterval(refreshTicker)
     }
-  }
+  })
 
-  componentWillUnmount = () => {
-    clearInterval(this.refreshTicker)
-  }
-
-  render = () => {
-    const {title = 'Важная информация'} = this.props
-    const { list = [] } = this.state
-    return (
-      <StyledRemoteInfo>
-        <div><strong>{title}</strong></div>
-        {
-          list.length
-            ?
+  return (
+    <StyledRemoteInfo>
+      <div><strong>{props.title}</strong></div>
+      {
+        list.length
+          ?
           <ul className="RemoteInfo-content">
             {list.map((li, idx) => <li key={idx}>{li.text}</li>)}
           </ul>
           : <p>Здесь пока ничего нет</p>
-        }
-      </StyledRemoteInfo>
-    )
-  }
+      }
+    </StyledRemoteInfo>
+  )
 }
 
 RemoteInfo.propTypes = {
