@@ -11,7 +11,7 @@ const path = window.require("path")
 
 const StyledLaunchItem = styled.button`
   height: 140px;
-  width: 100%;
+  width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   
@@ -32,6 +32,8 @@ const StyledLaunchItem = styled.button`
   
   .labelContainer {
     width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 `
 

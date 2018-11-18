@@ -29,66 +29,37 @@ window.addEventListener('beforeunload', () => {
 })
 
 const StyledApp = styled.div`
-  margin: 0.5em;
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: 2em calc(100vh - 6em) 2em;
   grid-gap: 0.5em;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 1fr;
+  width: 100vw;
+  height: 100vh;
   
-  header,
-  footer {
-    grid-column: 1 / span 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &, .App-main, .App-username, .App-filters {
+    padding: 0.5em;
   }
-  
-  header {
-    justify-content: flex-end;
-    padding: 0 1em;
-  }
-    
-  header, main, footer {
-    border-radius: 4px;
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
-  }
-  
+ 
   aside {
     display: grid;
-    
-    grid-template-rows: 6fr minmax(200px, 1fr) minmax(200px, 1fr);
     grid-gap: 0.5em;
+    grid-template-rows: 2em 1fr 250px 250px;
   }
   
-  main {
-    padding: 1em;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 100px);
-    grid-auto-rows: 140px;
-    grid-gap: 1em;
-    overflow-y: scroll;
+  .App-username {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
   
   .App-launchItemSearch {
     width: 100%;
   }
-  
-  .App-filters {
-    padding: 0.5em;
-  }
 `
 
 class App extends React.Component {
   state = {
-    appVersion: remote.app.getVersion(),
     username: username.sync(),
-    "remoteConfigServer": {
-      "host": null,
-      "port": null,
-      "enabled": true,
-      "updateInterval": 5000
-    },
-    "launchItems": [],
     selectedGroup: null,
     textFilter: ""
   }
@@ -113,22 +84,16 @@ class App extends React.Component {
       })
 
       const {protocol, host, port} = localConfig.remoteConfigServer
-      const remoteConfigConnectionString = `${protocol}://${host}:${port}/config.json`
-      const remoteConfigResponse = await fetch(remoteConfigConnectionString)
+      const remoteConfigResponse = await fetch(`${protocol}://${host}:${port}/config.json`)
       const parsedRemoteConfig = await remoteConfigResponse.json()
 
       this.setState({
-        remoteConfigRequestInProgress: false,
-        remoteConfigFetchSuccess: true,
-        remoteConfigConnectionString,
         launchItems: parsedRemoteConfig.launchItems,
       })
 
     } catch (err) {
       console.error(err)
       this.setState({
-        remoteConfigRequestInProgress: false,
-        remoteConfigFetchSuccess: false,
         launchItems: localConfig.launchItems
       })
     }
@@ -155,8 +120,8 @@ class App extends React.Component {
   }
 
   render() {
-    const {launchItems, appVersion, username, remoteConfigConnectionString, remoteConfigFetchSuccess, selectedGroup, remoteConfigServer, textFilter} = this.state
-    const {fetchNews, fetchInfo} = remoteConfigServer
+    const {launchItems = [], remoteConfigServer = {}, username, selectedGroup, textFilter} = this.state
+    const {fetchNews = true, fetchInfo} = remoteConfigServer
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
     return (
       <React.Fragment>
@@ -187,6 +152,9 @@ class App extends React.Component {
             }
           </main>
           <aside>
+            <Paper className="App-username">
+              Текущий пользователь:&nbsp;<strong>{username}</strong>
+            </Paper>
             <Paper className="App-filters">
               <TextField
                 id="standard-search"
@@ -210,8 +178,7 @@ class App extends React.Component {
                       isClearable/>
             </Paper>
             <Paper> {
-              fetchNews &&
-              <RemoteInfo title="Новости" serverParams={{...remoteConfigServer, fileName: "news"}}/>
+              fetchNews && <RemoteInfo title="Новости" serverParams={{...remoteConfigServer, fileName: "news"}}/>
             }
             </Paper>
             <Paper> {
@@ -220,10 +187,6 @@ class App extends React.Component {
             }
             </Paper>
           </aside>
-          <footer>
-            Версия: {appVersion}.
-            Используется: {remoteConfigFetchSuccess ? remoteConfigConnectionString : "локальная конфигурация"}
-          </footer>
         </StyledApp>
       </React.Fragment>
     );
