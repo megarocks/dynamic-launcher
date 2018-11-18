@@ -7,7 +7,7 @@ import 'typeface-roboto';
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField';
 
-import LaunchItem from "./LaunchItem"
+import LaunchItemsList from "./LaunchItemsList"
 import RemoteInfo from "./RemoteInfo"
 
 const {remote} = window.require("electron")
@@ -123,34 +123,32 @@ class App extends React.Component {
     const {launchItems = [], remoteConfigServer = {}, username, selectedGroup, textFilter} = this.state
     const {fetchNews = true, fetchInfo} = remoteConfigServer
     const allGroups = lodash.union(...launchItems.map(li => li.groups)).map(g => ({label: g, value: g}))
+
+    const filteredLaunchItems = launchItems.filter(li => {
+
+      if ("enabled" in li && !li.enabled) return false
+
+      if (selectedGroup && li.groups && li.groups.includes(selectedGroup.value)) {
+        return true
+      } else if (!selectedGroup) {
+        return true
+      }
+      else {
+        return false
+      }
+    }).filter(li => {
+      if (textFilter.length && li.caption.trim().toLowerCase().includes(textFilter.toLowerCase())) return true
+      else if (!textFilter.length) return true
+      else return false
+    })
+
     return (
       <React.Fragment>
         <CssBaseline/>
         <StyledApp>
-          <header>
-            Текущий пользователь: <strong>{username}</strong>
-          </header>
-          <main>
-            {
-              launchItems.filter(li => {
-
-                if ("enabled" in li && !li.enabled) return false
-
-                if (selectedGroup && li.groups && li.groups.includes(selectedGroup.value)) {
-                  return true
-                } else if (!selectedGroup) {
-                  return true
-                }
-                else {
-                  return false
-                }
-              }).filter(li => {
-                if (textFilter.length && li.caption.trim().toLowerCase().includes(textFilter.toLowerCase())) return true
-                else if (!textFilter.length) return true
-                else return false
-              }).map((launchItem, idx) => <LaunchItem key={idx} launchItem={launchItem}/>)
-            }
-          </main>
+          <Paper className="App-main">
+            <LaunchItemsList launchItems={filteredLaunchItems}/>
+          </Paper>
           <aside>
             <Paper className="App-username">
               Текущий пользователь:&nbsp;<strong>{username}</strong>
