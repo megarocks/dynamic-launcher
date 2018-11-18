@@ -96,6 +96,10 @@ class App extends React.Component {
       this.setState({
         launchItems: localConfig.launchItems
       })
+    } finally {
+      this.setState({
+        remoteConfigRequestInProgress: false
+      })
     }
   }
 
