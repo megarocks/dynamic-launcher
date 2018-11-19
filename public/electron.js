@@ -57,6 +57,7 @@ autoUpdater.on('download-progress', (progressObj) => {
 })
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
+  autoUpdater.quitAndInstall();
 });
 
 
@@ -64,7 +65,7 @@ app.commandLine.appendSwitch('disable-http-cache')
 
 app.on('ready', async () => {
   createWindow()
-  await autoUpdater.checkForUpdatesAndNotify();
+  await autoUpdater.checkForUpdates();
 });
 
 app.on('window-all-closed', () => {
