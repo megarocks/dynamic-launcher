@@ -16,6 +16,10 @@ const StyledList = styled(List)`
     justify-content: center;
   }
 `
+const LaunchItemPlaceholder = styled.button`
+  width: 100px;
+  height: 140px;
+`
 
 function LaunchItemsList({launchItems}) {
   function rowRenderer({
@@ -27,9 +31,10 @@ function LaunchItemsList({launchItems}) {
                        }) {
     const firstElementInRowIdx = index * itemsPerRow
     const rowElements = launchItems.slice(firstElementInRowIdx, firstElementInRowIdx + itemsPerRow)
+    // <LaunchItem key={key + idx} launchItem={ el }/>
     return (
       <div key={key} style={style} className="StyledList--row">
-        {rowElements.map((el, idx) => <LaunchItem key={key + idx} launchItem={ el}/>)}
+        {rowElements.map((el, idx) => isScrolling ? <LaunchItemPlaceholder disabled/> : <LaunchItem key={key + idx} launchItem={ el } isVisible/> )}
       </div>
     )
   }

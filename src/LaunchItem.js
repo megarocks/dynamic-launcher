@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components'
-import lodash from "lodash";
+import {debounce} from "lodash";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper'
 
 const {remote} = window.require("electron")
 const opn = window.require("opn")
 const path = window.require("path")
+const isDev = window.require('electron-is-dev')
 
 const StyledLaunchItem = styled.button`
   height: 140px;
@@ -49,7 +49,7 @@ class LaunchItem extends React.Component {
   }
 
   handleLaunchItemClick = (launchItem) => {
-    return lodash.debounce(async () => {
+    return debounce(async () => {
       try {
         if (launchItem.List) {
           this.setState({menuOpen: true})
@@ -68,7 +68,7 @@ class LaunchItem extends React.Component {
 
   createImageSourcePath = (launchItem) => {
     let appPath;
-    if (remote.process.platform === 'darwin') {
+    if ( isDev || remote.process.platform === 'darwin') {
       appPath = remote.app.getAppPath()
     } else {
       appPath = path.parse(remote.process.execPath).dir
@@ -84,11 +84,10 @@ class LaunchItem extends React.Component {
   }
 
   render = () => {
-    const {idx, launchItem} = this.props
+    const {idx, launchItem, isVisible} = this.props
 
     return (
       <React.Fragment>
-        <Paper>
         <StyledLaunchItem
           ref={this.anchorElRef}
           aria-owns={this.anchorElRef.current ? `launch-items-list-${idx}` : undefined}
@@ -97,13 +96,14 @@ class LaunchItem extends React.Component {
           onClick={this.handleLaunchItemClick(launchItem)}
         >
           <div className="imageContainer">
-            <img
+          {
+            isVisible &&             <img
               src={`file://${this.createImageSourcePath(launchItem)}`}
               alt=""/>
+          }
           </div>
           <div className="labelContainer">{launchItem.caption}</div>
         </StyledLaunchItem>
-        </Paper>
         {
           launchItem.List && launchItem.List.length &&
           <Menu
