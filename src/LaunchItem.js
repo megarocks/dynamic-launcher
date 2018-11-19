@@ -84,6 +84,15 @@ class LaunchItem extends React.Component {
     return appPath + logoPath
   }
 
+  renderImage = () => {
+    const {launchItem, isVisible, isScrolling} = this.props
+  
+    if (!isVisible) return null
+    //if (isScrolling) return null
+
+    return <Img src={`file://${this.createImageSourcePath(launchItem)}`} />
+  }
+
   render = () => {
     const {idx, launchItem, isVisible, isScrolling} = this.props
 
@@ -97,11 +106,7 @@ class LaunchItem extends React.Component {
           onClick={this.handleLaunchItemClick(launchItem)}
         >
           <div className="imageContainer">
-            {
-              isVisible && !isScrolling
-              &&
-              <Img src={`file://${this.createImageSourcePath(launchItem)}`} />
-            }
+            { this.renderImage() }
           </div>
           <div className="labelContainer">{launchItem.caption}</div>
         </StyledLaunchItem>
