@@ -29,7 +29,7 @@ function LaunchItemsList({launchItems}) {
     const rowElements = launchItems.slice(firstElementInRowIdx, firstElementInRowIdx + itemsPerRow)
     return (
       <div key={key} style={style} className="StyledList--row">
-        {rowElements.map((el, idx) => <LaunchItem key={key + idx} launchItem={ !isScrolling ? el : null}/>)}
+        {rowElements.map((el, idx) => <LaunchItem key={key + idx} launchItem={ el}/>)}
       </div>
     )
   }
