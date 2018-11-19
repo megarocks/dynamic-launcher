@@ -50,7 +50,7 @@
     },
     {
       "caption": "BMW",
-      "icon": "BMW.png",
+      "icon": "bmw.png",
       "List": [
         {
           "caption": "BMW ETK Online Vin",
@@ -72,7 +72,7 @@
     {
       "enabled": true,
       "caption": "Явно открытая программа",
-      "icon": "Alfa.png",
+      "icon": "alfa.png",
       "FileName": "C:\\Windows\\write.exe"
     },
     {
