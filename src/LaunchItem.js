@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {debounce} from "lodash";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Img from 'react-image'
 
 const {remote} = window.require("electron")
 const opn = window.require("opn")
@@ -99,7 +100,7 @@ class LaunchItem extends React.Component {
             {
               isVisible
               &&
-              <img src={`file://${this.createImageSourcePath(launchItem)}`} alt=""/>
+              <Img src={`file://${this.createImageSourcePath(launchItem)}`} />
             }
           </div>
           <div className="labelContainer">{launchItem.caption}</div>
