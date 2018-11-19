@@ -68,7 +68,7 @@ class LaunchItem extends React.Component {
 
   createImageSourcePath = (launchItem) => {
     let appPath;
-    if ( isDev || remote.process.platform === 'darwin') {
+    if (isDev || remote.process.platform === 'darwin') {
       appPath = remote.app.getAppPath()
     } else {
       appPath = path.parse(remote.process.execPath).dir
@@ -96,11 +96,11 @@ class LaunchItem extends React.Component {
           onClick={this.handleLaunchItemClick(launchItem)}
         >
           <div className="imageContainer">
-          {
-            isVisible &&             <img
-              src={`file://${this.createImageSourcePath(launchItem)}`}
-              alt=""/>
-          }
+            {
+              isVisible
+              &&
+              <img src={`file://${this.createImageSourcePath(launchItem)}`} alt=""/>
+            }
           </div>
           <div className="labelContainer">{launchItem.caption}</div>
         </StyledLaunchItem>
