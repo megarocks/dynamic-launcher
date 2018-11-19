@@ -1,7 +1,7 @@
 {
   "name": "dynamic-launcher",
   "description": "dynamic-launcher",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "private": true,
   "author": "vitaly.kiktiov@gmail.com",
   "dependencies": {
