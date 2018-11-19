@@ -85,7 +85,7 @@ class LaunchItem extends React.Component {
   }
 
   render = () => {
-    const {idx, launchItem, isVisible} = this.props
+    const {idx, launchItem, isVisible, isScrolling} = this.props
 
     return (
       <React.Fragment>
@@ -98,7 +98,7 @@ class LaunchItem extends React.Component {
         >
           <div className="imageContainer">
             {
-              isVisible
+              isVisible && !isScrolling
               &&
               <Img src={`file://${this.createImageSourcePath(launchItem)}`} />
             }
