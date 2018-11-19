@@ -1,12 +1,12 @@
 {
   "remoteConfigServer": {
     "protocol": "http",
-    "host": "localhost",
-    "port": 3000,
-    "enabled": true,
+    "host": "192.168.1.137",
+    "port": 80,
+    "enabled": false,
     "updateInterval": 5000,
-    "fetchNews": true,
-    "fetchInfo": true
+    "fetchNews": false,
+    "fetchInfo": false
   },
   "launchItems": [
     {
@@ -81,583 +81,583 @@
       "FileName": "C:\\Windows\\write.exe"
     },
     {
-      "caption": "Abarth.png",
-      "icon": "Abarth.png"
+      "caption": "abarth",
+      "icon": "abarth.png"
     },
     {
-      "caption": "Acura.png",
-      "icon": "Acura.png"
+      "caption": "acura",
+      "icon": "acura.png"
     },
     {
-      "caption": "Alfa.png",
-      "icon": "Alfa.png"
-    },
-    {
-      "caption": "AllData.png",
-      "icon": "AllData.png"
-    },
-    {
-      "caption": "BMW.png",
-      "icon": "BMW.png"
-    },
-    {
-      "caption": "Bentley.png",
-      "icon": "Bentley.png"
-    },
-    {
-      "caption": "Bomag.png",
-      "icon": "Bomag.png"
-    },
-    {
-      "caption": "Bosch.png",
-      "icon": "Bosch.png"
-    },
-    {
-      "caption": "Buhler.png",
-      "icon": "Buhler.png"
-    },
-    {
-      "caption": "Cargobull.png",
-      "icon": "Cargobull.png"
-    },
-    {
-      "caption": "Chevrolet.png",
-      "icon": "Chevrolet.png"
-    },
-    {
-      "caption": "Chrysler.png",
-      "icon": "Chrysler.png"
-    },
-    {
-      "caption": "Citroen.png",
-      "icon": "Citroen.png"
-    },
-    {
-      "caption": "Corteco.png",
-      "icon": "Corteco.png"
-    },
-    {
-      "caption": "Dacia.png",
-      "icon": "Dacia.png"
-    },
-    {
-      "caption": "Daewoo.png",
-      "icon": "Daewoo.png"
-    },
-    {
-      "caption": "Datsun.png",
-      "icon": "Datsun.png"
-    },
-    {
-      "caption": "Denso.png",
-      "icon": "Denso.png"
-    },
-    {
-      "caption": "Detroit.png",
-      "icon": "Detroit.png"
-    },
-    {
-      "caption": "Eberspaecher.png",
-      "icon": "Eberspaecher.png"
-    },
-    {
-      "caption": "Exide.png",
-      "icon": "Exide.png"
-    },
-    {
-      "caption": "Febest.png",
-      "icon": "Febest.png"
-    },
-    {
-      "caption": "Fiat.png",
-      "icon": "Fiat.png"
-    },
-    {
-      "caption": "Ford.png",
-      "icon": "Ford.png"
-    },
-    {
-      "caption": "Freightliner.png",
-      "icon": "Freightliner.png"
-    },
-    {
-      "caption": "Fruehauf.png",
-      "icon": "Fruehauf.png"
-    },
-    {
-      "caption": "GKN.png",
-      "icon": "GKN.png"
-    },
-    {
-      "caption": "Geely.png",
-      "icon": "Geely.png"
-    },
-    {
-      "caption": "General Motors.png",
-      "icon": "General Motors.png"
-    },
-    {
-      "caption": "Gigant.png",
-      "icon": "Gigant.png"
-    },
-    {
-      "caption": "Hitachi.png",
-      "icon": "Hitachi.png"
-    },
-    {
-      "caption": "Holset.png",
-      "icon": "Holset.png"
-    },
-    {
-      "caption": "Honda.png",
-      "icon": "Honda.png"
-    },
-    {
-      "caption": "Hummer.png",
-      "icon": "Hummer.png"
-    },
-    {
-      "caption": "Hyundai.png",
-      "icon": "Hyundai.png"
-    },
-    {
-      "caption": "Ika.png",
-      "icon": "Ika.png"
-    },
-    {
-      "caption": "Infiniti.png",
-      "icon": "Infiniti.png"
-    },
-    {
-      "caption": "Isuzu.png",
-      "icon": "Isuzu.png"
-    },
-    {
-      "caption": "Jaguar.png",
-      "icon": "Jaguar.png"
-    },
-    {
-      "caption": "John Deere.png",
-      "icon": "John Deere.png"
-    },
-    {
-      "caption": "KYB.png",
-      "icon": "KYB.png"
-    },
-    {
-      "caption": "Kenworth.png",
-      "icon": "Kenworth.png"
-    },
-    {
-      "caption": "Kia.png",
-      "icon": "Kia.png"
-    },
-    {
-      "caption": "Kogel.png",
-      "icon": "Kogel.png"
-    },
-    {
-      "caption": "Krone.png",
-      "icon": "Krone.png"
-    },
-    {
-      "caption": "Lada.png",
-      "icon": "Lada.png"
-    },
-    {
-      "caption": "Lancia.png",
-      "icon": "Lancia.png"
-    },
-    {
-      "caption": "Land Rover.png",
-      "icon": "Land Rover.png"
-    },
-    {
-      "caption": "Lexus.png",
-      "icon": "Lexus.png"
-    },
-    {
-      "caption": "Lincoln.png",
-      "icon": "Lincoln.png"
-    },
-    {
-      "caption": "MERITOR.png",
-      "icon": "MERITOR.png"
-    },
-    {
-      "caption": "MGRover.png",
-      "icon": "MGRover.png"
-    },
-    {
-      "caption": "Mazda.png",
-      "icon": "Mazda.png"
-    },
-    {
-      "caption": "Mercedes.png",
-      "icon": "Mercedes.png"
-    },
-    {
-      "caption": "Mitsubishi.png",
-      "icon": "Mitsubishi.png"
-    },
-    {
-      "caption": "Neoplan.png",
-      "icon": "Neoplan.png"
-    },
-    {
-      "caption": "New Holland.png",
-      "icon": "New Holland.png"
-    },
-    {
-      "caption": "Nissan.png",
-      "icon": "Nissan.png"
-    },
-    {
-      "caption": "Nissens.png",
-      "icon": "Nissens.png"
-    },
-    {
-      "caption": "Opel.png",
-      "icon": "Opel.png"
-    },
-    {
-      "caption": "Paccar.png",
-      "icon": "Paccar.png"
-    },
-    {
-      "caption": "Peterbilt.png",
-      "icon": "Peterbilt.png"
-    },
-    {
-      "caption": "Peugeot.png",
-      "icon": "Peugeot.png"
-    },
-    {
-      "caption": "Pontiac.png",
-      "icon": "Pontiac.png"
-    },
-    {
-      "caption": "Porsche.png",
-      "icon": "Porsche.png"
-    },
-    {
-      "caption": "Ram.png",
-      "icon": "Ram.png"
-    },
-    {
-      "caption": "Renault.png",
-      "icon": "Renault.png"
-    },
-    {
-      "caption": "SEINSA.png",
-      "icon": "SEINSA.png"
-    },
-    {
-      "caption": "Saab.png",
-      "icon": "Saab.png"
-    },
-    {
-      "caption": "Saic.png",
-      "icon": "Saic.png"
-    },
-    {
-      "caption": "Saturn.png",
-      "icon": "Saturn.png"
-    },
-    {
-      "caption": "Scania.png",
-      "icon": "Scania.png"
-    },
-    {
-      "caption": "Setra.png",
-      "icon": "Setra.png"
-    },
-    {
-      "caption": "Shell.png",
-      "icon": "Shell.png"
-    },
-    {
-      "caption": "Shrif.png",
-      "icon": "Shrif.png"
-    },
-    {
-      "caption": "SsangYong.png",
-      "icon": "SsangYong.png"
-    },
-    {
-      "caption": "Subaru.png",
-      "icon": "Subaru.png"
-    },
-    {
-      "caption": "Suzuki.png",
-      "icon": "Suzuki.png"
-    },
-    {
-      "caption": "TECDOC.png",
-      "icon": "TECDOC.png"
-    },
-    {
-      "caption": "TONG_YANG.png",
-      "icon": "TONG_YANG.png"
-    },
-    {
-      "caption": "TYC.png",
-      "icon": "TYC.png"
-    },
-    {
-      "caption": "Tito.png",
-      "icon": "Tito.png"
-    },
-    {
-      "caption": "Toyota.png",
-      "icon": "Toyota.png"
-    },
-    {
-      "caption": "Uaz.png",
-      "icon": "Uaz.png"
-    },
-    {
-      "caption": "Vauxhall.png",
-      "icon": "Vauxhall.png"
-    },
-    {
-      "caption": "Volvo.png",
-      "icon": "Volvo.png"
-    },
-    {
-      "caption": "Wabco.png",
-      "icon": "Wabco.png"
-    },
-    {
-      "caption": "Web.png",
-      "icon": "Web.png"
-    },
-    {
-      "caption": "Wielton.png",
-      "icon": "Wielton.png"
-    },
-    {
-      "caption": "Zexel.png",
-      "icon": "Zexel.png"
-    },
-    {
-      "caption": "airteche.png",
+      "caption": "airteche",
       "icon": "airteche.png"
     },
     {
-      "caption": "atris.png",
+      "caption": "alfa",
+      "icon": "alfa.png"
+    },
+    {
+      "caption": "alldata",
+      "icon": "alldata.png"
+    },
+    {
+      "caption": "atris",
       "icon": "atris.png"
     },
     {
-      "caption": "autodata.PNG",
-      "icon": "autodata.PNG"
+      "caption": "autodata",
+      "icon": "autodata.png"
     },
     {
-      "caption": "bpw.png",
+      "caption": "bentley",
+      "icon": "bentley.png"
+    },
+    {
+      "caption": "bmw",
+      "icon": "bmw.png"
+    },
+    {
+      "caption": "bomag",
+      "icon": "bomag.png"
+    },
+    {
+      "caption": "bosch",
+      "icon": "bosch.png"
+    },
+    {
+      "caption": "bpw",
       "icon": "bpw.png"
     },
     {
-      "caption": "brp.png",
+      "caption": "brp",
       "icon": "brp.png"
     },
     {
-      "caption": "buick.png",
+      "caption": "buhler",
+      "icon": "buhler.png"
+    },
+    {
+      "caption": "buick",
       "icon": "buick.png"
     },
     {
-      "caption": "cadilac.png",
+      "caption": "cadilac",
       "icon": "cadilac.png"
     },
     {
-      "caption": "car parts.png",
-      "icon": "car parts.png"
+      "caption": "car-parts",
+      "icon": "car-parts.png"
     },
     {
-      "caption": "case.png",
+      "caption": "cargobull",
+      "icon": "cargobull.png"
+    },
+    {
+      "caption": "case",
       "icon": "case.png"
     },
     {
-      "caption": "caterpillar.png",
+      "caption": "caterpillar",
       "icon": "caterpillar.png"
     },
     {
-      "caption": "chery.png",
+      "caption": "chery",
       "icon": "chery.png"
     },
     {
-      "caption": "china.png",
+      "caption": "chevrolet",
+      "icon": "chevrolet.png"
+    },
+    {
+      "caption": "china",
       "icon": "china.png"
     },
     {
-      "caption": "claas.png",
+      "caption": "chrysler",
+      "icon": "chrysler.png"
+    },
+    {
+      "caption": "citroen",
+      "icon": "citroen.png"
+    },
+    {
+      "caption": "claas",
       "icon": "claas.png"
     },
     {
-      "caption": "cowin.png",
+      "caption": "corteco",
+      "icon": "corteco.png"
+    },
+    {
+      "caption": "cowin",
       "icon": "cowin.png"
     },
     {
-      "caption": "cowon.png",
+      "caption": "cowon",
       "icon": "cowon.png"
     },
     {
-      "caption": "cummins.png",
+      "caption": "cummins",
       "icon": "cummins.png"
     },
     {
-      "caption": "daf.png",
+      "caption": "dacia",
+      "icon": "dacia.png"
+    },
+    {
+      "caption": "daewoo",
+      "icon": "daewoo.png"
+    },
+    {
+      "caption": "daf",
       "icon": "daf.png"
     },
     {
-      "caption": "daihatsu.png",
+      "caption": "daihatsu",
       "icon": "daihatsu.png"
     },
     {
-      "caption": "default.png",
+      "caption": "datsun",
+      "icon": "datsun.png"
+    },
+    {
+      "caption": "default",
       "icon": "default.png"
     },
     {
-      "caption": "deutz.png",
+      "caption": "denso",
+      "icon": "denso.png"
+    },
+    {
+      "caption": "detroit",
+      "icon": "detroit.png"
+    },
+    {
+      "caption": "deutz",
       "icon": "deutz.png"
     },
     {
-      "caption": "dodge.png",
+      "caption": "dodge",
       "icon": "dodge.png"
     },
     {
-      "caption": "ds.png",
+      "caption": "ds",
       "icon": "ds.png"
     },
     {
-      "caption": "eaton.png",
+      "caption": "eaton",
       "icon": "eaton.png"
     },
     {
-      "caption": "fuso.png",
+      "caption": "eberspaecher",
+      "icon": "eberspaecher.png"
+    },
+    {
+      "caption": "exide",
+      "icon": "exide.png"
+    },
+    {
+      "caption": "febest",
+      "icon": "febest.png"
+    },
+    {
+      "caption": "fiat",
+      "icon": "fiat.png"
+    },
+    {
+      "caption": "ford",
+      "icon": "ford.png"
+    },
+    {
+      "caption": "freightliner",
+      "icon": "freightliner.png"
+    },
+    {
+      "caption": "fruehauf",
+      "icon": "fruehauf.png"
+    },
+    {
+      "caption": "fuso",
       "icon": "fuso.png"
     },
     {
-      "caption": "great wall.png",
-      "icon": "great wall.png"
+      "caption": "geely",
+      "icon": "geely.png"
     },
     {
-      "caption": "help.png",
+      "caption": "general-motors",
+      "icon": "general-motors.png"
+    },
+    {
+      "caption": "gigant",
+      "icon": "gigant.png"
+    },
+    {
+      "caption": "gkn",
+      "icon": "gkn.png"
+    },
+    {
+      "caption": "great-wall",
+      "icon": "great-wall.png"
+    },
+    {
+      "caption": "help",
       "icon": "help.png"
     },
     {
-      "caption": "hino.png",
+      "caption": "hino",
       "icon": "hino.png"
     },
     {
-      "caption": "howo.png",
+      "caption": "hitachi",
+      "icon": "hitachi.png"
+    },
+    {
+      "caption": "holset",
+      "icon": "holset.png"
+    },
+    {
+      "caption": "honda",
+      "icon": "honda.png"
+    },
+    {
+      "caption": "howo",
       "icon": "howo.png"
     },
     {
-      "caption": "international.png",
+      "caption": "hummer",
+      "icon": "hummer.png"
+    },
+    {
+      "caption": "hyundai",
+      "icon": "hyundai.png"
+    },
+    {
+      "caption": "ika",
+      "icon": "ika.png"
+    },
+    {
+      "caption": "infiniti",
+      "icon": "infiniti.png"
+    },
+    {
+      "caption": "international",
       "icon": "international.png"
     },
     {
-      "caption": "iveco.png",
+      "caption": "isuzu",
+      "icon": "isuzu.png"
+    },
+    {
+      "caption": "iveco",
       "icon": "iveco.png"
     },
     {
-      "caption": "jcb.png",
+      "caption": "jaguar",
+      "icon": "jaguar.png"
+    },
+    {
+      "caption": "jcb",
       "icon": "jcb.png"
     },
     {
-      "caption": "jeep.png",
+      "caption": "jeep",
       "icon": "jeep.png"
     },
     {
-      "caption": "knorr-bremse.png",
+      "caption": "john-deere",
+      "icon": "john-deere.png"
+    },
+    {
+      "caption": "kenworth",
+      "icon": "kenworth.png"
+    },
+    {
+      "caption": "kia",
+      "icon": "kia.png"
+    },
+    {
+      "caption": "knorr-bremse",
       "icon": "knorr-bremse.png"
     },
     {
-      "caption": "komatsu.png",
+      "caption": "kogel",
+      "icon": "kogel.png"
+    },
+    {
+      "caption": "komatsu",
       "icon": "komatsu.png"
     },
     {
-      "caption": "leg.png",
+      "caption": "krone",
+      "icon": "krone.png"
+    },
+    {
+      "caption": "kyb",
+      "icon": "kyb.png"
+    },
+    {
+      "caption": "lada",
+      "icon": "lada.png"
+    },
+    {
+      "caption": "lancia",
+      "icon": "lancia.png"
+    },
+    {
+      "caption": "land-rover",
+      "icon": "land-rover.png"
+    },
+    {
+      "caption": "leg",
       "icon": "leg.png"
     },
     {
-      "caption": "lic.png",
+      "caption": "lexus",
+      "icon": "lexus.png"
+    },
+    {
+      "caption": "lic",
       "icon": "lic.png"
     },
     {
-      "caption": "mack.png",
+      "caption": "lincoln",
+      "icon": "lincoln.png"
+    },
+    {
+      "caption": "mack",
       "icon": "mack.png"
     },
     {
-      "caption": "man.png",
+      "caption": "man",
       "icon": "man.png"
     },
     {
-      "caption": "michelin.png",
+      "caption": "mazda",
+      "icon": "mazda.png"
+    },
+    {
+      "caption": "mercedes",
+      "icon": "mercedes.png"
+    },
+    {
+      "caption": "meritor",
+      "icon": "meritor.png"
+    },
+    {
+      "caption": "mgrover",
+      "icon": "mgrover.png"
+    },
+    {
+      "caption": "michelin",
       "icon": "michelin.png"
     },
     {
-      "caption": "pass.png",
+      "caption": "mitsubishi",
+      "icon": "mitsubishi.png"
+    },
+    {
+      "caption": "neoplan",
+      "icon": "neoplan.png"
+    },
+    {
+      "caption": "new-holland",
+      "icon": "new-holland.png"
+    },
+    {
+      "caption": "nissan",
+      "icon": "nissan.png"
+    },
+    {
+      "caption": "nissens",
+      "icon": "nissens.png"
+    },
+    {
+      "caption": "opel",
+      "icon": "opel.png"
+    },
+    {
+      "caption": "paccar",
+      "icon": "paccar.png"
+    },
+    {
+      "caption": "pass",
       "icon": "pass.png"
     },
     {
-      "caption": "polaris.png",
+      "caption": "peterbilt",
+      "icon": "peterbilt.png"
+    },
+    {
+      "caption": "peugeot",
+      "icon": "peugeot.png"
+    },
+    {
+      "caption": "polaris",
       "icon": "polaris.png"
     },
     {
-      "caption": "ras.png",
+      "caption": "pontiac",
+      "icon": "pontiac.png"
+    },
+    {
+      "caption": "porsche",
+      "icon": "porsche.png"
+    },
+    {
+      "caption": "ram",
+      "icon": "ram.png"
+    },
+    {
+      "caption": "ras",
       "icon": "ras.png"
     },
     {
-      "caption": "remsa.png",
+      "caption": "remsa",
       "icon": "remsa.png"
     },
     {
-      "caption": "saf.png",
+      "caption": "renault",
+      "icon": "renault.png"
+    },
+    {
+      "caption": "saab",
+      "icon": "saab.png"
+    },
+    {
+      "caption": "saf",
       "icon": "saf.png"
     },
     {
-      "caption": "skf.png",
+      "caption": "saic",
+      "icon": "saic.png"
+    },
+    {
+      "caption": "saturn",
+      "icon": "saturn.png"
+    },
+    {
+      "caption": "scania",
+      "icon": "scania.png"
+    },
+    {
+      "caption": "seinsa",
+      "icon": "seinsa.png"
+    },
+    {
+      "caption": "setra",
+      "icon": "setra.png"
+    },
+    {
+      "caption": "shell",
+      "icon": "shell.png"
+    },
+    {
+      "caption": "shrif",
+      "icon": "shrif.png"
+    },
+    {
+      "caption": "skf",
       "icon": "skf.png"
     },
     {
-      "caption": "slovar.png",
+      "caption": "slovar",
       "icon": "slovar.png"
     },
     {
-      "caption": "tagaz.png",
+      "caption": "ssangyong",
+      "icon": "ssangyong.png"
+    },
+    {
+      "caption": "subaru",
+      "icon": "subaru.png"
+    },
+    {
+      "caption": "suzuki",
+      "icon": "suzuki.png"
+    },
+    {
+      "caption": "tagaz",
       "icon": "tagaz.png"
     },
     {
-      "caption": "tesla.png",
+      "caption": "tecdoc",
+      "icon": "tecdoc.png"
+    },
+    {
+      "caption": "tesla",
       "icon": "tesla.png"
     },
     {
-      "caption": "trp.png",
+      "caption": "tito",
+      "icon": "tito.png"
+    },
+    {
+      "caption": "tong_yang",
+      "icon": "tong_yang.png"
+    },
+    {
+      "caption": "toyota",
+      "icon": "toyota.png"
+    },
+    {
+      "caption": "trp",
       "icon": "trp.png"
     },
     {
-      "caption": "truc.png",
+      "caption": "truc",
       "icon": "truc.png"
     },
     {
-      "caption": "vag.png",
+      "caption": "tyc",
+      "icon": "tyc.png"
+    },
+    {
+      "caption": "uaz",
+      "icon": "uaz.png"
+    },
+    {
+      "caption": "vag",
       "icon": "vag.png"
     },
     {
-      "caption": "workshopdata.png",
+      "caption": "vauxhall",
+      "icon": "vauxhall.png"
+    },
+    {
+      "caption": "volvo",
+      "icon": "volvo.png"
+    },
+    {
+      "caption": "wabco",
+      "icon": "wabco.png"
+    },
+    {
+      "caption": "web",
+      "icon": "web.png"
+    },
+    {
+      "caption": "wielton",
+      "icon": "wielton.png"
+    },
+    {
+      "caption": "workshopdata",
       "icon": "workshopdata.png"
     },
     {
-      "caption": "yamaha.png",
+      "caption": "yamaha",
       "icon": "yamaha.png"
     },
     {
-      "caption": "zaz.png",
+      "caption": "zaz",
       "icon": "zaz.png"
     },
     {
-      "caption": "zf.png",
+      "caption": "zexel",
+      "icon": "zexel.png"
+    },
+    {
+      "caption": "zf",
       "icon": "zf.png"
     }
   ]

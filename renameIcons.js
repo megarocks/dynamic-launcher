@@ -1,4 +1,6 @@
-﻿{
+const fs = require('fs')
+
+const configJson = {
   "remoteConfigServer": {
     "protocol": "http",
     "host": "192.168.1.137",
@@ -75,3 +77,8 @@
     }
   ]
 }
+fs.readdir('./logo', (err, files) => {
+  files.forEach(fileName => {
+    fs.renameSync('./logo/' + fileName, './logo/' + fileName.replace(' ', '-').toLowerCase().trim())
+  })
+})

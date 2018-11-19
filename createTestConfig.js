@@ -81,7 +81,7 @@ const configJson = {
 fs.readdir('./logo', (err, files) => {
   files.forEach(fileName => {
     configJson.launchItems.push({
-      caption: fileName,
+      caption: fileName.replace('.png', ''),
       icon: fileName
     })
   })
