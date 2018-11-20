@@ -9,6 +9,7 @@ const {remote} = window.require("electron")
 const opn = window.require("opn")
 const path = window.require("path")
 const isDev = window.require('electron-is-dev')
+const base64Img = window.require('base64-img')
 
 const StyledLaunchItem = styled.button`
   height: 140px;
@@ -46,15 +47,14 @@ class LaunchItem extends React.Component {
   }
 
   state = {
-    menuOpen: false
+    menuOpen: false,
+    imgData: null
   }
 
   componentDidMount = () => {
-    console.log(this.props.launchItem.icon + ' did mount')
-  }
-
-  componentWillUnmount = () => {
-    console.log(this.props.launchItem.icon + ' unmount')
+    base64Img.base64('./logo/' + this.props.launchItem.icon, (err, data) => {
+      this.setState({imgData: data})
+    })
   }
 
   handleLaunchItemClick = (launchItem) => {
@@ -93,16 +93,16 @@ class LaunchItem extends React.Component {
   }
 
   renderImage = () => {
-    const {launchItem, isVisible, isScrolling} = this.props
+    const { isVisible } = this.props
+    const { imgData } = this.state
   
-    if (!isVisible) return null
-    //if (isScrolling) return null
+    if (!isVisible || !imgData) return null
 
-    return <Img src={`file://${this.createImageSourcePath(launchItem)}`} />
+    return <img src={imgData} />
   }
 
   render = () => {
-    const {idx, launchItem, isVisible, isScrolling} = this.props
+    const {idx, launchItem } = this.props
 
     return (
       <React.Fragment>
