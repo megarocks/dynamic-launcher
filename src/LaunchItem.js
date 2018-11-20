@@ -49,6 +49,14 @@ class LaunchItem extends React.Component {
     menuOpen: false
   }
 
+  componentDidMount = () => {
+    console.log(this.props.launchItem.icon + ' did mount')
+  }
+
+  componentWillUnmount = () => {
+    console.log(this.props.launchItem.icon + ' unmount')
+  }
+
   handleLaunchItemClick = (launchItem) => {
     return debounce(async () => {
       try {
