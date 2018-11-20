@@ -6,6 +6,7 @@
   "author": "vitaly.kiktiov@gmail.com",
   "dependencies": {
     "@material-ui/core": "^3.5.1",
+    "base64-img": "^1.0.4",
     "cuid": "^2.1.4",
     "electron-is-dev": "^1.0.1",
     "electron-log": "^2.2.17",
