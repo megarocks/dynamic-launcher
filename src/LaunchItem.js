@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import {debounce} from "lodash";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Img from 'react-image'
 
 const {remote} = window.require("electron")
 const opn = window.require("opn")
-const path = window.require("path")
-const isDev = window.require('electron-is-dev')
+const util = window.require("util")
 const base64Img = window.require('base64-img')
+
+const getBase64ImgFromFs = util.promisify(base64Img.base64)
 
 const StyledLaunchItem = styled.button`
   height: 140px;
@@ -51,10 +51,14 @@ class LaunchItem extends React.Component {
     imgData: null
   }
 
-  componentDidMount = () => {
-    base64Img.base64('./logo/' + this.props.launchItem.icon, (err, data) => {
-      this.setState({imgData: data})
-    })
+  componentDidMount = async () => {
+    try {
+      const { launchItem: { icon = 'default.png' } } = this.props
+      const imgData = await getBase64ImgFromFs(icon)
+      this.setState({imgData})
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   handleLaunchItemClick = (launchItem) => {
@@ -73,23 +77,6 @@ class LaunchItem extends React.Component {
         remote.dialog.showErrorBox(`Ошибка при запуске приложения: ${launchItem.FileName}`, e.message)
       }
     }, 150)
-  }
-
-  createImageSourcePath = (launchItem) => {
-    let appPath;
-    if (isDev || remote.process.platform === 'darwin') {
-      appPath = remote.app.getAppPath()
-    } else {
-      appPath = path.parse(remote.process.execPath).dir
-    }
-
-    let logoPath = path.join('/', 'logo', '/')
-    if (launchItem.icon) {
-      logoPath += launchItem.icon
-    } else {
-      logoPath += "default.png"
-    }
-    return appPath + logoPath
   }
 
   renderImage = () => {
