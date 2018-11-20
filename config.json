@@ -449,10 +449,6 @@
       "icon": "mgrover.png"
     },
     {
-      "caption": "michelin",
-      "icon": "michelin.png"
-    },
-    {
       "caption": "mitsubishi",
       "icon": "mitsubishi.png"
     },
@@ -583,10 +579,6 @@
     {
       "caption": "tecdoc",
       "icon": "tecdoc.png"
-    },
-    {
-      "caption": "tesla",
-      "icon": "tesla.png"
     },
     {
       "caption": "tito",
