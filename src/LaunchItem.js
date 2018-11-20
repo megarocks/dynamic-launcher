@@ -54,7 +54,7 @@ class LaunchItem extends React.Component {
   componentDidMount = async () => {
     try {
       const { launchItem: { icon = 'default.png' } } = this.props
-      const imgData = await getBase64ImgFromFs(icon)
+      const imgData = await getBase64ImgFromFs('./logo/' + icon)
       this.setState({imgData})
     } catch (err) {
       console.log(err)
