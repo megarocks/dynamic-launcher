@@ -51,17 +51,25 @@ autoUpdater.on('download-progress', (progressObj) => {
   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
   sendStatusToWindow(log_message);
 })
-autoUpdater.on('update-downloaded', (info) => {
-  sendStatusToWindow('Update downloaded');
-  autoUpdater.quitAndInstall();
+autoUpdater.on('update-downloaded', async (info) => {
+  try {
+    sendStatusToWindow('Update downloaded');
+    await autoUpdater.checkForUpdatesAndNotify()
+  } catch (err) {
+    sendStatusToWindow(err.message);
+  }
 });
 
 
 app.commandLine.appendSwitch('disable-http-cache')
 
 app.on('ready', async () => {
-  createWindow()
-  await autoUpdater.checkForUpdates();
+  try {
+    createWindow()
+    await autoUpdater.checkForUpdates();
+  } catch (err) {
+    sendStatusToWindow(err.message)
+  }
 });
 
 app.on('window-all-closed', () => {
