@@ -5,6 +5,8 @@ import {AutoSizer, List} from 'react-virtualized';
 
 import LaunchItem from "./LaunchItem"
 
+const hash = window.require("object-hash")
+
 const itemsPerRow = 8
 
 const StyledList = styled(List)`    
@@ -27,10 +29,10 @@ function LaunchItemsList({launchItems}) {
                        }) {
     const firstElementInRowIdx = index * itemsPerRow
     const rowElements = launchItems.slice(firstElementInRowIdx, firstElementInRowIdx + itemsPerRow)
-    // <LaunchItem key={key + idx} launchItem={ el }/>
+
     return (
       <div key={key} style={style} className="StyledList--row">
-        {rowElements.map((el, idx) => <LaunchItem key={key + idx} launchItem={ el } isScrolling={isScrolling} isVisible={isVisible}/> )}
+        {rowElements.map(el => <LaunchItem key={hash(el)} launchItem={ el } isScrolling={isScrolling} isVisible={isVisible}/> )}
       </div>
     )
   }

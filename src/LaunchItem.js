@@ -89,15 +89,15 @@ class LaunchItem extends React.Component {
   }
 
   render = () => {
-    const {idx, launchItem } = this.props
+    const {launchItem, key} = this.props
 
     return (
       <React.Fragment>
         <StyledLaunchItem
           ref={this.anchorElRef}
-          aria-owns={this.anchorElRef.current ? `launch-items-list-${idx}` : undefined}
+          aria-owns={this.anchorElRef.current ? `launch-items-list-${key}` : undefined}
           aria-haspopup="true"
-          key={idx}
+          key={key}
           onClick={this.handleLaunchItemClick(launchItem)}
         >
           <div className="imageContainer">
@@ -108,7 +108,7 @@ class LaunchItem extends React.Component {
         {
           launchItem.List && launchItem.List.length &&
           <Menu
-            id={`launch-items-list-${idx}`}
+            id={`launch-items-list-${key}`}
             anchorEl={this.anchorElRef.current}
             open={this.state.menuOpen}
             onClose={() => {
